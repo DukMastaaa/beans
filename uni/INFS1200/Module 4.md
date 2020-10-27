@@ -263,3 +263,30 @@ let's say you have some R and some FD X -> Y. To determine whether X -> Y holds 
 
 1. is X \cup Y \subseteq R? if yes continue
 2. find X+ (not sure why we do this)
+
+## Normalisation to 3NF by Synthesis
+
+### Minimal Cover
+
+we rely on minimal cover.
+
+steps to compute minimal cover:
+
+1. split up RHS of each FD in F, call this set of FDs F1
+2. for each X -> Y in F1 such that X contains more than 1 attribute, see whether X+ = (X-B)+ for some B in X. If so, replace X with X-B. In other words, see if you can remove any attribute from X such that the closure is the same. If you can, replace X with (X - removed attribute). Call the new set of FDs F2.
+3. Check for redundancy in resulting FDs.
+   For each X -> Y in F2, see if you can infer X -> Y using all other FDs in F2 except X -> Y. If you can, X -> Y is redundant and can be removed. Call the new set of FDs F3.
+
+F3 is the minimal cover of F. You can union FDs with the same LHS to simplify notation.
+
+### 3NF Synthesis
+
+steps to normalise to 3NF:
+
+1. compute minimal cover with union.
+2. compute candidate keys of R.
+3. for each FD X -> Y in minimal cover, create a new relation with attributes X \union Y.
+4. if there is a candidate key whose attributes are not in any new relation, create a new relation whose attributes are the candidate key.
+5. check for redundancy - this includes duplicated relations, or a relation which is a projection of another relation.
+
+the resulting relations should each have either no non-trivial FDs (this is if its attributes are a candidate key) or one FD from the minimal cover. end
