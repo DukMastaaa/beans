@@ -2,8 +2,8 @@
 notes for various subjects from school/uni
 
 ## Uni Courses
-- INFS1200
-- CSSE2010
+- INFS1200 Introduction to Information Systems
+- CSSE2010 Introduction to Computer Systems
 
 ## School Subjects
 - Maths B
