@@ -1,4 +1,14 @@
 # beans
 notes for various subjects from school/uni
 
-i use typora to write the notes, so there are embedded latex and diagrams that github's markdown doesn't render.
+## Uni Courses
+- INFS1200
+- CSSE2010
+
+## School Subjects
+- Maths B
+- Maths C
+- Year 12 Physics
+
+I use typora to write some notes, so there are embedded latex and diagrams that Github's Markdown doesn't render.
+Images should render properly because they are stored in a `./images` folder relative to the Markdown file.
