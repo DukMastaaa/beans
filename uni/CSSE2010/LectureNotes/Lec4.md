@@ -2,7 +2,7 @@
 
 ## More adders
 
-![image-20210303110729462](C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210303110729462.png)
+<img src="images/image-20210303110729462.png" style="zoom: 50%;" />
 
 This is ripple-carry adder or parallel adder for 4 bits. You chain full adders together, and their carry in.
 
@@ -33,7 +33,7 @@ Want some control signal M where if M is high, we subtract; if M is low, we add.
 
 We accomplish this using XOR on M and B, $X = M \oplus B$. If M is 0, you just get B itself, if M is 1, you get $\bar B$.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210303112406814.png" alt="image-20210303112406814" style="zoom:67%;" />
+<img src="images/image-20210303112406814.png" alt="image-20210303112406814" style="zoom: 67%;" />
 
 Here, each bit of B is XORed with M to flip all of the bits depending on value of M. Note M is connected to carry in, so if M is high, then we also add 1 to complete the process of calculating 2's complement.
 
@@ -47,7 +47,7 @@ $n$ inputs, $m$ outputs. Circuit contains combination of logic gates; output dep
 
 $2^n$ data inputs, 1 output, $n$ control (or select) inputs which select 1 of the inputs to be sent to the output.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210303113509614.png" alt="image-20210303113509614" style="zoom:33%;" />
+<img src="images/image-20210303113509614.png" alt="image-20210303113509614" style="zoom:50%;" />
 
 Function table example for 4-to-1 multiplexer (with n = 2):
 
@@ -74,7 +74,7 @@ Can actually use a multiplexer to implement arbitrary logic function based on se
 
 Converts $n$-bit input to a logic HIGH of the $n$th output.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210303115201702.png" alt="image-20210303115201702" style="zoom: 50%;" />
+<img src="images/image-20210303115201702.png" alt="image-20210303115201702" style="zoom:50%;" />
 
 This can be used as an address decoder - given a memory address, it outputs to one cell.
 
@@ -87,7 +87,7 @@ These are reverse operations of the previous 2 circuits.
 
 ## Timing Diagram
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210303115523806.png" alt="image-20210303115523806" style="zoom:50%;" />
+<img src="images/image-20210303115523806.png" alt="image-20210303115523806" style="zoom:50%;" />
 
 Timing diagram is like a truth table but graphical. Input waveforms show all possible combinations.
 

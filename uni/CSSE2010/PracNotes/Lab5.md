@@ -22,7 +22,7 @@ Want
 
 if we just have some cross-coupled nand gates, don't know yet
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210311113336142.png" alt="image-20210311113336142" style="zoom:50%;" />
+<img src="images/image-20210311113336142.png" alt="image-20210311113336142" style="zoom: 33%;" />
 
 truth table:
 

@@ -4,7 +4,7 @@
 
 All circuits can be constructed from NAND and NOR gates - they are called complete gates. One motivation for this is that it is easier to build NAND and NOR gates from transistors.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210301162216940.png" alt="image-20210301162216940" style="zoom: 67%;" />
+<img src="images/image-20210301162216940.png" alt="image-20210301162216940" style="zoom: 50%;" />
 
 ## Binary Arithmetic
 
@@ -59,6 +59,6 @@ $$
 
 But we also have to deal with the carry-in from the previous adder. Full adder takes this into account, so we have
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210304103252739.png" alt="image-20210304103252739" style="zoom:50%;" />
+<img src="images/image-20210304103252739.png" alt="image-20210304103252739" style="zoom:33%;" />
 
 it's like adding A and B, then adding carry in to that output.

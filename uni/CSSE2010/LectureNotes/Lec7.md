@@ -10,10 +10,10 @@ Counter which follows binary number seq is a *binary counter*. n-bit binary coun
 
 Here is simple 1-bit counter. We usually call Q the *present state* and D the *next state*, because Q <- D after one clock pulse.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210315162133226.png" alt="image-20210315162133226" style="zoom:33%;" />
+<img src="images/image-20210315162133226.png" alt="image-20210315162133226" style="zoom:67%;" />
 
 ### 2-bit counter
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210322103517843.png" alt="image-20210322103517843" style="zoom:30%;" />
+<img src="images/image-20210322103517843.png" alt="image-20210322103517843" style="zoom: 33%;" />
 
 This is calculated by drawing table with current state and next states, and trying to find logic expression for $D_i$ in terms of all $Q_i$.

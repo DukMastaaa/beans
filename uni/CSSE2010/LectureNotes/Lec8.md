@@ -13,7 +13,7 @@ Sequential circuits can be thought of as a finite state machine (or state machin
 1. **Mealy** machine: outputs depend on current state **and** inputs
 2. **Moore** machine: outputs depend **only** on current state (and outputs only change when state changes)
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210322134953628.png" alt="image-20210322134953628" style="zoom:50%;" />
+<img src="images/image-20210322134953628.png" alt="image-20210322134953628" style="zoom: 50%;" />
 
 State machines contain **state/transition logic** (the combinational cct on the left) and **output logic** (cct on right). Here, we only study Moore machines where output logic does not depend on inputs.
 
@@ -21,7 +21,7 @@ State machines contain **state/transition logic** (the combinational cct on the 
 
 Notation for states:
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210322135222317.png" alt="image-20210322135222317" style="zoom: 33%;" />
+<img src="images/image-20210322135222317.png" alt="image-20210322135222317" style="zoom:50%;" />
 
 Transitions indicate how one state changes to the next. This is illustrated by drawing an arrow from one state bubble to the next one. Put logic expression next to arrow - if expression true, state changes to new state pointed to by arrow.
 
@@ -33,11 +33,11 @@ Completeness: transitions coming from one state must encompass all possibilities
 
 Here is state diagram of 2-bit binary up counter
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210322135827691.png" alt="image-20210322135827691" style="zoom:50%;" />
+<img src="images/image-20210322135827691.png" alt="image-20210322135827691" style="zoom: 50%;" />
 
 Here is state diagram of 2-bit binary up/down counter
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210322135855537.png" alt="image-20210322135855537" style="zoom:50%;" />
+<img src="images/image-20210322135855537.png" alt="image-20210322135855537" style="zoom:50%;" />
 
 Note that some arrows lead to the same state - this indicates that having those inputs will not change the state.
 

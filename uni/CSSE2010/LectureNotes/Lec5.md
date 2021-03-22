@@ -6,7 +6,7 @@ unlike combinational circuits, current output depends on current inputs and past
 
 ## D flip flop
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210314123335198.png" alt="image-20210314123335198" style="zoom:50%;" />
+<img src="images/image-20210314123335198.png" alt="image-20210314123335198" style="zoom: 50%;" />
 
 D is input, CLK is clock signal, Q is output. Arrow next to CLK represents rising edge - circuit will "update" when the clock signal goes from low to high. Similarly, if there is bubble outside of CLK input, this means falling edge - updates when high to low.
 
@@ -33,7 +33,7 @@ There are other types of flip flops (JK and T) but will not be covered here.
 
 SR latch: set/reset latch.
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210314131159207.png" alt="image-20210314131159207" style="zoom:50%;" />
+<img src="images/image-20210314131159207.png" alt="image-20210314131159207" style="zoom:50%;" />
 
 Outputs feed back into other gate - cross-coupled.
 
@@ -45,7 +45,7 @@ Flip flops are modified latches which are sensitive to an edge - either rising, 
 
 D flip flop schematic using latches:
 
-<img src="C:\Users\JB\AppData\Roaming\Typora\typora-user-images\image-20210314131458580.png" alt="image-20210314131458580" style="zoom:50%;" />
+<img src="images/image-20210314131458580.png" alt="image-20210314131458580" style="zoom:50%;" />
 
 ## Synchronous vs Asynchronous
 
