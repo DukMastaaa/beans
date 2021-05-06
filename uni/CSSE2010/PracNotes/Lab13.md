@@ -31,10 +31,11 @@ Output compare actions:
 
 <img src="images/image-20210429103008638.png" alt="image-20210429103008638" style="zoom:50%;" />
 
-This is what happens when we get the compare match.
+This i s what happens when we get the compare match.
 $$
 f_{osc} = \frac{f_{sys}}{\mathrm{PRE} * (\mathrm{OCR1A} + 1)}
 \implies
 \mathrm{OCR1A} = \frac{f_{sys}}{\mathrm{PRE} * f_{osc}} - 1,
 $$
 where $f_{osc}$ is desired oscillation frequency.
+

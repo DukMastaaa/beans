@@ -11,12 +11,12 @@
 | `ASR rd`         | similar to `LSR`. shifts everything to right, original right is carry, but left bit is repeated. implements signed division by 2. compare `LSR`. there is no `ASL` for some reason. |
 | `BREQ  label`    | jumps to `label` if `Z = 1`.                                 |
 | `BRNE label`     | jumps to `label` if `Z = 0`.                                 |
-| `CALL label`     | calls new procedure at memory address `label`, 32 bit instruction. |
+| `CALL label`     | calls new procedure at memory address `label`, 32 bit instruction. decr stack pointer by 2. |
 | `CLR rd`         | sets all bits in `rd` to 0. equivalent `LDI rd, 0x00`. compare `SER` |
 | `COM rd`         | flip all bits in register, 1's complement negation           |
 | `CP rd, rr`      | basically subtracts `rd` and `rr` and sees if they're the same. result not stored, but status flags are changed. used with `BRXX` instructions. |
 | `EOR rd, rr`     | bitwise exclusive or                                         |
-| `ICALL`          | calls procedure stored in `Z` register, 16 bit.              |
+| `ICALL`          | calls procedure stored in `Z` register, 16 bit. decr stack pointer by 2. |
 | `IJMP`           | jumps to address stored in `Z` register, 16 bit.             |
 | `IN rd, P`       | load I/O register value into general purpose register, rd no restriction, P is I/O register 0 - 63 |
 | `JMP label`      | jumps to a label, just like goto. label syntax just like batch goto. |
@@ -29,8 +29,11 @@
 | `NEG rd`         | 2's complement negation                                      |
 | `OR rd, rr`      | bitwise or                                                   |
 | `ORI rd, number` | or immediate into register, 16 <= rd <= 31                   |
-| `RCALL label`    | relative call, compare with `CALL`. 16 bit.                  |
-| `RET`            | what                                                         |
+| `POP rd`         | pops the top value off stack, stores it in `rd`, increments stack pointer by 1 (to move down). compare `push` |
+| `PUSH rr`        | pushes value in `rr` to stack, decrements stack pointer by 1(to move up). compare `pop` |
+| `RCALL label`    | relative call, compare with `CALL`. decr stack ptr by 2. 16 bit. |
+| `RET`            | sets PC to value stored in stack then increments SP by 2     |
+| `RETI`           | return from interrupt, re-enable interrupts.                 |
 | `RJMP offset`    | Moves instruction pointer by `offset` amount (relative jump). -2048 <= `offset` <= 2047. |
 | `ROL rd`         | rotate left through carry, useful for * by 2 with more than 8 bits. compare `ROR` |
 | `ROR rd`         | rotate right through carry, useful for / by 2 with more than 8 bits. compare `ROL` |
