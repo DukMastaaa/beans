@@ -90,8 +90,9 @@ Declare variable as `volatile` when variable can change outside of normal progra
 Besides handler, need to
 
 - Set up conditions for interrupt
+- Enable interrupts in the I/O device, typically by using an *interrupt mask register*
 - Turn on interrupts globally. There is `I` bit in status register which controls global interrupts. Use `sei()` macro in C or `sei` instruction.
-- Also apparently there's an I/O register with bits that you need to enable for each individual interrupt but idk
+- Write a 1 to the particular interrupt *flag* register bit to clear it, so the ISR won't be triggered immediately
 
 ### Nested Interrupts
 
@@ -102,3 +103,4 @@ The next slide in the lectures directly contradicts this information. What?
 ## Traps
 
 Basically software interrupts for exceptional events e.g. overflow, div by 0 etc. Traps save continually checking for errors, but trap handlers don't always return to original program. AVR doesn't provide traps but can emulate this behaviour by writing a value to a pin and feeding that output pin to an input pin, letting hardware interrupts do the work. This is mmh.
+
