@@ -102,12 +102,77 @@ Note we don't encode leading 1 in mantissa.
 
 ## NAND/NOR Equivalents
 
-![image-20210301162216940](file://D:\GitHub\beans\uni\CSSE2010\LectureNotes\images\image-20210301162216940.png?lastModify=1622788589)
+<img src="images/image-20210301162216940.png" alt="image-20210301162216940" style="zoom: 50%;" />
 
 # Combinational Logic
+
+## Adders
 
 Half adder just adds two bits together with no cin; $S = A \oplus B$, $C_{out} = AB$.
 Full adder adapts this for cin: $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$ .
 
 Cascade more full adders to make a ripple carry adder, where we chain previous cout to next cin.
+
+## Other
+
+Multiplexer: $2^n$ data inputs, 1 output, $n$ select inputs. It picks the data input based on decimal representation of select inputs. To implement arbitrary logic function, idea is to pick correct data inputs based on every combination of select inputs.
+
+Decoder: converts $n$-bit select input to a logic high of $n$th output.
+
+Demux/encoder: other way around.
+
+# Sequential Logic
+
+## D Flip-Flop
+
+<img src="images/image-20210314123335198.png" alt="image-20210314123335198" style="zoom: 50%;" />
+
+D input, Q output. On clock rising edge (or on falling edge if bubble), Q set to D. This allows one D flip-flop to remember 1 bit, so n-bit register requires n flip-flops.
+
+### Shift Registers
+
+- All flip-flops share CLK.
+- Right shift: chain D on right to Q on left. 
+- Left shift: chain Q on right to D on left.
+- Serial can be sent in from first, and parallel out can be read from Q of each flip-flop.
+
+## SR Latch
+
+A 2-input circuit is a SR latch if it has:
+
+1. memory state
+2. set state
+3. reset state
+4. 1 bit transition from memory <-> set, and memory <-> reset
+
+Following example has S = 1, R = 1 as invalid state:
+
+<img src="images/image-20210314131159207-1622808030537.png" alt="image-20210314131159207" style="zoom:50%;" />
+
+## State Machines
+
+### State Diagram
+
+Set of arrows coming out from each state must be complete. Example is for 2-bit up counter:
+
+<img src="images/image-20210322135827691.png" alt="image-20210322135827691" style="zoom:50%;" />
+
+### State Diagram to Circuit
+
+1. Turn state diagram into 2D state table, which has current state (text), next state if each input (e.g. 0 or 1) and output for state.
+2. Pick an encoding:
+   - unsigned: just count up in binary
+   - Gray: 1-bit transitions between each state (00 01 11 10)
+   - 1-hot: one bit is high for each state
+3. Make 1D state table, where you replace each state name with its encoding
+4. Find boolean expressions for D1, D0, X from Q1, Q0, S (e.g.)
+5. Draw logic diagram then circuit schematic
+
+Similar process to construct counter circuits. For combination lock, the entire input state doesn't need to be stored every time; can make pure combinational circuit checking if value is expected, and then only store bool value if input matches.
+
+# AVR 
+
+## Inside CPU
+
+CPU has 
 
