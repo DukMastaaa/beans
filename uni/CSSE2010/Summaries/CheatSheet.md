@@ -232,6 +232,9 @@ DDR is for data direction register. On each of the ports, DDR either lets the po
 
 `ldi rd, number`: for `r16-r31`, put number in `rd`.
 `add/and/or/eor rd, rr`: just like ALU, results go into `rd`.
+`clr` clears
+`inc` to increment, `dec` to decrement
+`mov rd, rr` which is `rd = rr`
 
 ### Addressing Modes
 
@@ -246,6 +249,34 @@ DDR is for data direction register. On each of the ports, DDR either lets the po
 ### Shifts
 
 <img src="images/image-20210605200451930.png" alt="image-20210605200451930" style="zoom: 67%;" />
+
+### Arithmetic with Multiple Registers
+
+| Operation           | How                                                          |
+| ------------------- | ------------------------------------------------------------ |
+| 2's comp. negation  | 1. `neg` least significant<br />2. `com` the others          |
+| Addition            | 1. `add` least significant<br />2. `adc` the others going up |
+| Division by 2       | If 2's complement, `asr` most significant<br />Else if unsigned, `lsr` most significant<br />Finally `ror` the others going down |
+| Multiplication by 2 | If unsigned: `lsl` least significant then `rol` the others going up<br />Else if 2's complement, do something like below. |
+|                     |                                                              |
+
+for multiplication by 2 with 2's complement, with some 24-bit value in `top:middle:bottom`:
+
+```
+inc counter
+lsl bottom
+rol middle
+mov temp, top
+
+; following two instructions don't affect carry
+andi temp, 0b10000000  ; mask off sign, carry kept
+ori temp,  0b01111111  ; set other bits to 1 so we can apply mask
+
+rol top
+and top, temp  ; restore sign bit by applying mask
+```
+
+
 
 ### Assembly Process
 
