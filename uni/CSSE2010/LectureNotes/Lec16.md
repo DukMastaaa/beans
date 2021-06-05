@@ -25,7 +25,7 @@ Specifically for atmega, 2 modes for pwm: fast pwm and phase correct pwm.
 
 ### Phase Correct PWM
 
-Centres of pulses remain at same point in time. Better for motor speed contro, but won't use in course.
+Centres of pulses remain at same point in time. Better for motor speed control, but won't use in course.
 
 <img src="images/image-20210502201943900.png" alt="image-20210502201943900" style="zoom:33%;" />
 

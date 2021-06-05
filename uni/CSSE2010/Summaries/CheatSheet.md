@@ -1,3 +1,7 @@
+---
+title: cheatsheet
+---
+
 # Number Representations
 
 ## Integers
@@ -170,9 +174,133 @@ Set of arrows coming out from each state must be complete. Example is for 2-bit 
 
 Similar process to construct counter circuits. For combination lock, the entire input state doesn't need to be stored every time; can make pure combinational circuit checking if value is expected, and then only store bool value if input matches.
 
-# AVR 
+# AVR CPU
 
-## Inside CPU
+## Control Unit
 
-CPU has 
+Fetches instructions from memory and makes ALU/registers perform next instruction. 
+
+## ALU
+
+ALU constructed out of many ALU bit slices, where each supports many operations on 1 bit at a time: addition, inversion, OR, AND, etc. Chain carry out to next carry in, and function inputs go through all slices. Perform $B - A = B + \bar A + 1$ (add 1 to carry in).
+
+To analyse ALU bit slice, follow circuit to see which values are enabled/inverted and which operation is being selected. Make sure to check for carry in.
+
+## Status Register
+
+Remember to check which instructions affect the status register.
+
+| Position | Name | Description                                                  |
+| -------- | ---- | ------------------------------------------------------------ |
+| 0        | C    | carry-out                                                    |
+| 1        | Z    | is zero                                                      |
+| 2        | N    | is negative, basically just the MSB                          |
+| 3        | V    | overflow (assuming 2's complement)                           |
+| 4        | S    | actual sign of outputted value corrected for overflow, $S = N \oplus V$ |
+| 5        | H    | half-carry bit: if there is carry out from first 4           |
+| 6        | T    | test bit                                                     |
+| 7        | I    | global interrupts enabled? (sei to set, cli to clear)        |
+
+## Pipelining
+
+Pipelining divides a task into several smaller tasks which can be completed in less time, where the smaller tasks are executed in parallel to queue up following instructions (throughput can be increased). AVR has 2 stage pipeline: fetch + execute. At branch, CPU needs to guess new instructions to put in, so currently-processed instructions will be thrown away if branch prediction incorrect.
+
+Latency: time per instruction
+Throughput: instructions per unit time (?)
+
+# C and AVR Assembly
+
+## Important Registers
+
+General-purpose registers are in CPU: r0-r31. They are 8 bits wide each. The 16-bit X, Y and Z registers are r27 (high) - r26 (low), r29-r28, r31-r30 respectively.
+
+I/O registers are separate to GP registers and control I/O devices. There are 64 I/O and 160 external I/O registers.
+
+SP (stack pointer) is for stack, see below.
+
+DDR is for data direction register. On each of the ports, DDR either lets the port be an output (bit is high) or an input (bit low). You can set `DDRA`, `DDRB`, `DDRC`, `DDRD`. Read input using `PINA`...`PIND` and write output using `PORTA`...`PORTD`.
+
+## Assembly
+
+### Important Instructions
+
+- Register -> register: MOV
+- Memory -> register: LD
+- Register -> memory: ST
+- I/O register -> register: IN
+- Register -> I/O register: OUT
+
+`ldi rd, number`: for `r16-r31`, put number in `rd`.
+`add/and/or/eor rd, rr`: just like ALU, results go into `rd`.
+
+### Addressing Modes
+
+*Immediate*: value is in the instruction, e.g. `ANDI r17, 0xBA`
+
+*Register*: only register numbers in instruction, e.g. `AND r18, r19`
+
+*Direct*: memory address in instruction, e.g. `LDS r15, $1234` where `lds` is load direct from SRAM. Requires 32-bit instruction.
+
+*Indirect*: memory address in register, register number in instruction, e.g. `LD r5, X` where `X` is some register holding location in memory.
+
+### Shifts
+
+<img src="images/image-20210605200451930.png" alt="image-20210605200451930" style="zoom: 67%;" />
+
+### Assembly Process
+
+
+
+## C
+
+### Programming
+
+
+
+### Linking and Compilation
+
+
+
+# Other ATmega324A Features
+
+## Timers/Counters
+
+
+
+### Seven-Segment Display
+
+
+
+## ADC
+
+
+
+## SPI
+
+
+
+## Serial I/O
+
+
+
+# Data Storage and Transfer
+
+## Types of Computer Memory
+
+
+
+## File System
+
+
+
+## Buses
+
+
+
+# Important Documents
+
+- timers 1-3 data
+- register summary
+- instruction set summary
+- interrupt vector list
 

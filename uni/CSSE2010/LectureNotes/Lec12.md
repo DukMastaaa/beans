@@ -1,6 +1,6 @@
 # Lecture 12
 
-Instruction set architecture is just a specification of the interface between hardware and software. Microarchitecture is how the control unit is built. Microarchitecture designers don't need to know about the software which will be running; only need to build a microarchitecture which implements RSA. Programmers don't need to know much about microarchitecture; only need to generate instructions which conform to RSA.
+Instruction set architecture is just a specification of the interface between hardware and software. Microarchitecture is how the control unit is built. Microarchitecture designers don't need to know about the software which will be running; only need to build a microarchitecture which implements ISA. Programmers don't need to know much about microarchitecture; only need to generate instructions which conform to ISA.
 
 ## Memory Models
 
@@ -86,3 +86,4 @@ This is main feature of ISA. Types include
 For I/O, memory addresses 32 to 255. First 64 can be accessed using `in`/`out`, other 160 can only be accessed with load/store.
 
 See Instructions.md for `in`/`out`.
+

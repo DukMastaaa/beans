@@ -61,5 +61,5 @@ Most instructions are 16 bits wide, first 6 is usually opcode
 | 4        | S    | actual sign of outputted value corrected for overflow, $S = N \oplus V$ |
 | 5        | H    | half-carry bit: if there is carry out from first 4           |
 | 6        | T    | test bit                                                     |
-| 7        | I    | interrupt                                                    |
+| 7        | I    | global interrupts enabled? (sei to set, cli to clear)        |
 
