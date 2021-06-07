@@ -1,30 +1,7 @@
----
-title: cheatsheet
----
+## Number Representations
 
-# Number Representations
-
-## Integers
-
-### Basic Conversion
-
-Decimal to unsigned:
-
-```
-53 = 26  13  6   3   1   0
-     1   0   1   0   1   1
-Read right to left: 110101
-```
-
-Unsigned to decimal:
-
-```
-110101
-= 1 + 4 + 16 + 32
-= 53
-```
-
-### Comparison
+Decimal to unsigned: split into powers of 2 then write from LSB upwards.
+Unsigned to decimal: add powers of 2.
 
 | Representation   | Range                       | Description                        | Conversion                                         |
 | ---------------- | --------------------------- | ---------------------------------- | -------------------------------------------------- |
@@ -35,18 +12,7 @@ Unsigned to decimal:
 | Excess-128       | Same as 2's comp.           | Number stored as true number + 128 | 2's complement but with sign bit flipped           |
 
 Alternate method for unsigned -> negative 2's complement: start from LSB, copy all 0s and first 1, then flip all bits past the first 1.
-
-### Arithmetic
-
-Addition is just normal addition.
-For subtraction, add the negative 2's complement of the number ($a - b = a + (-b)$).
-
-### Overflow
-
-Unsigned: MSB carry out is 1
-2's comp: MSB carry in and MSB carry out are different
-
-## Real Numbers
+To subtract, add the negative 2's complement value.
 
 ### Fixed-Point
 
@@ -89,58 +55,43 @@ Or, 0xC1BA0000.
 Note we don't encode leading 1 in mantissa.
 ```
 
-# Boolean Algebra
+## Boolean Algebra
 
-## Useful Identities
-
-- $AA = A$, $A + A = A$
-- $0A = 0$, $A + 1 = 1$
-- $(A+B)(A+C) = A + BC$
-- $A(B+C) = AB + AC$
-- $A(A+B) = A$
-- $\overline{AB} = \bar A + \bar B$
-- $\overline{A + B} = \bar A \bar B$
-- $A\bar B + \bar A B = A \oplus B$
-- $AB + \bar A \bar B = \overline{A \oplus B}$
-- $\overline{A \oplus B} = \bar A \oplus B = A \oplus \bar B$
-
-## NAND/NOR Equivalents
+| $AA = A$, $A + A = A$                        | $0A = 0$, $A + 1 = 1$                                       |
+| -------------------------------------------- | ----------------------------------------------------------- |
+| $(A+B)(A+C) = A + BC$                        | $A(B+C) = AB + AC$                                          |
+| $A(A+B) = A$                                 | $\overline{AB} = \bar A + \bar B$                           |
+| $\overline{A + B} = \bar A \bar B$           | $A\bar B + \bar A B = A \oplus B$                           |
+| $AB + \bar A \bar B = \overline{A \oplus B}$ | $\overline{A \oplus B} = \bar A \oplus B = A \oplus \bar B$ |
 
 <img src="images/image-20210301162216940.png" alt="image-20210301162216940" style="zoom: 50%;" />
 
-# Combinational Logic
+## Combinational Logic
 
-## Adders
+*Half adder* just adds two bits together with no cin; $S = A \oplus B$, $C_{out} = AB$.
+*Full adder* adapts this for cin: $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$ .
+Cascade more full adders to make a *ripple carry adder*, where we chain previous cout to next cin.
 
-Half adder just adds two bits together with no cin; $S = A \oplus B$, $C_{out} = AB$.
-Full adder adapts this for cin: $S = A \oplus B \oplus C_{in}$, $C_{out} = AB + C_{in}(A \oplus B)$ .
+*Multiplexer*: $2^n$ data inputs, 1 output, $n$ select inputs. It picks the data input based on decimal representation of select inputs. To implement arbitrary logic function, idea is to pick correct data inputs based on every combination of select inputs.
 
-Cascade more full adders to make a ripple carry adder, where we chain previous cout to next cin.
+*Decoder*: converts $n$-bit select input to a logic high of $n$th output.
 
-## Other
+*Demux*/*encoder*: other way around.
 
-Multiplexer: $2^n$ data inputs, 1 output, $n$ select inputs. It picks the data input based on decimal representation of select inputs. To implement arbitrary logic function, idea is to pick correct data inputs based on every combination of select inputs.
+## Sequential Logic
 
-Decoder: converts $n$-bit select input to a logic high of $n$th output.
-
-Demux/encoder: other way around.
-
-# Sequential Logic
-
-## D Flip-Flop
-
-<img src="images/image-20210314123335198.png" alt="image-20210314123335198" style="zoom: 50%;" />
+### D Flip-Flop
 
 D input, Q output. On clock rising edge (or on falling edge if bubble), Q set to D. This allows one D flip-flop to remember 1 bit, so n-bit register requires n flip-flops.
 
-### Shift Registers
+For shift registers,
 
 - All flip-flops share CLK.
 - Right shift: chain D on right to Q on left. 
 - Left shift: chain Q on right to D on left.
 - Serial can be sent in from first, and parallel out can be read from Q of each flip-flop.
 
-## SR Latch
+### SR Latch
 
 A 2-input circuit is a SR latch if it has:
 
@@ -149,19 +100,11 @@ A 2-input circuit is a SR latch if it has:
 3. reset state
 4. 1 bit transition from memory <-> set, and memory <-> reset
 
-Following example has S = 1, R = 1 as invalid state:
+Example is cross-coupled NOR gates. $\bar Q$ on same side as $S$, $Q$ on same side as $R$. S=1 R=1 invalid.
 
-<img src="images/image-20210314131159207-1622808030537.png" alt="image-20210314131159207" style="zoom:50%;" />
+### State Machines
 
-## State Machines
-
-### State Diagram
-
-Set of arrows coming out from each state must be complete. Example is for 2-bit up counter:
-
-<img src="images/image-20210322135827691.png" alt="image-20210322135827691" style="zoom:50%;" />
-
-### State Diagram to Circuit
+Set of arrows coming out from each state must be complete.
 
 1. Turn state diagram into 2D state table, which has current state (text), next state if each input (e.g. 0 or 1) and output for state.
 2. Pick an encoding:
@@ -174,21 +117,15 @@ Set of arrows coming out from each state must be complete. Example is for 2-bit 
 
 Similar process to construct counter circuits. For combination lock, the entire input state doesn't need to be stored every time; can make pure combinational circuit checking if value is expected, and then only store bool value if input matches.
 
-# AVR CPU
+## AVR CPU
 
-## Control Unit
+<img src="images/image-20210606172239547.png" alt="image-20210606172239547" style="zoom: 50%;" />
 
-Fetches instructions from memory and makes ALU/registers perform next instruction. 
+*Control unit* fetches instructions from memory and makes ALU/registers perform next instruction. 
 
-## ALU
-
-ALU constructed out of many ALU bit slices, where each supports many operations on 1 bit at a time: addition, inversion, OR, AND, etc. Chain carry out to next carry in, and function inputs go through all slices. Perform $B - A = B + \bar A + 1$ (add 1 to carry in).
+*ALU* constructed out of many ALU bit slices, where each supports many operations on 1 bit at a time: addition, inversion, OR, AND, etc. Chain carry out to next carry in, and function inputs go through all slices. Perform $B - A = B + \bar A + 1$ (add 1 to carry in).
 
 To analyse ALU bit slice, follow circuit to see which values are enabled/inverted and which operation is being selected. Make sure to check for carry in.
-
-## Status Register
-
-Remember to check which instructions affect the status register.
 
 | Position | Name | Description                                                  |
 | -------- | ---- | ------------------------------------------------------------ |
@@ -201,137 +138,100 @@ Remember to check which instructions affect the status register.
 | 6        | T    | test bit                                                     |
 | 7        | I    | global interrupts enabled? (sei to set, cli to clear)        |
 
-## Pipelining
+## C and AVR Assembly
 
-Pipelining divides a task into several smaller tasks which can be completed in less time, where the smaller tasks are executed in parallel to queue up following instructions (throughput can be increased). AVR has 2 stage pipeline: fetch + execute. At branch, CPU needs to guess new instructions to put in, so currently-processed instructions will be thrown away if branch prediction incorrect.
+GP: r0-r31, 8 bits wide. X is r27:r26, Y is r29:r28, Z is r31:r30. 64 I/O, 160 external I/O. Write DDR bit high for output and low for input; read from `PIN` and write to `PORT`.
 
-Latency: time per instruction
-Throughput: instructions per unit time (?)
+### Assembly
 
-# C and AVR Assembly
+`ld`/`st` for memory <-> register, `in`/`out` for I/O register <-> register.
+`clr` clears, `ser` sets. `inc`/`dec` to increment/decrement.
+`ldi rd, num` for r16-r31 puts number in `rd`. `mov rd, rr` does `rd = rr`.
 
-## Important Registers
+`ld rd, Y` loads `rd` with value pointed to by `Y`
+`ld rd, Y+` loads `rd` with value pointed to by `Y` and increments `Y` *afterward*
+`ld rd, -Y` decrements `Y` *first* and then loads `rd` with value pointed to by `Y`
+`ldd rd, Y+q` loads `rd` with value pointed to by `(Y+q)`. no incrementing; only for `Y` and `Z`.
+above is very similar for `st Y, rr`, `st Y+, rr`, `st -Y, rr` and `std Y+q, rr`.
+remember to `clr YH` or equivalent if you don't need it.
 
-General-purpose registers are in CPU: r0-r31. They are 8 bits wide each. The 16-bit X, Y and Z registers are r27 (high) - r26 (low), r29-r28, r31-r30 respectively.
+use `lds` and `sts` with the definitions in the include file when r/w to the extended io registers.
+when using `ldi` to load 16-bit value, use `low(num)` and `high(num)` like `ldi r16, low(9999)`.
 
-I/O registers are separate to GP registers and control I/O devices. There are 64 I/O and 160 external I/O registers.
+`push rd`: save value of `rd` onto stack
+`pop rr`: pop top value of stack and save it to `rr`
 
-SP (stack pointer) is for stack, see below.
+`cpi rr, num` is very useful: compares value of register with literal `num`, for use with `brXX`
 
-DDR is for data direction register. On each of the ports, DDR either lets the port be an output (bit is high) or an input (bit low). You can set `DDRA`, `DDRB`, `DDRC`, `DDRD`. Read input using `PINA`...`PIND` and write output using `PORTA`...`PORTD`.
-
-## Assembly
-
-### Important Instructions
-
-- Register -> register: MOV
-- Memory -> register: LD
-- Register -> memory: ST
-- I/O register -> register: IN
-- Register -> I/O register: OUT
-
-`ldi rd, number`: for `r16-r31`, put number in `rd`.
-`add/and/or/eor rd, rr`: just like ALU, results go into `rd`.
-`clr` clears
-`inc` to increment, `dec` to decrement
-`mov rd, rr` which is `rd = rr`
-
-### Addressing Modes
-
-*Immediate*: value is in the instruction, e.g. `ANDI r17, 0xBA`
-
-*Register*: only register numbers in instruction, e.g. `AND r18, r19`
-
-*Direct*: memory address in instruction, e.g. `LDS r15, $1234` where `lds` is load direct from SRAM. Requires 32-bit instruction.
-
-*Indirect*: memory address in register, register number in instruction, e.g. `LD r5, X` where `X` is some register holding location in memory.
-
-### Shifts
+<img src="images/image-20210606124541886.png" alt="image-20210606124541886" style="zoom:50%;" />
 
 <img src="images/image-20210605200451930.png" alt="image-20210605200451930" style="zoom: 67%;" />
 
-### Arithmetic with Multiple Registers
-
 | Operation           | How                                                          |
 | ------------------- | ------------------------------------------------------------ |
-| 2's comp. negation  | 1. `neg` least significant<br />2. `com` the others          |
+| 2's comp. negation  | 1. `com` all<br />2. add 1 to whole quantity                 |
 | Addition            | 1. `add` least significant<br />2. `adc` the others going up |
 | Division by 2       | If 2's complement, `asr` most significant<br />Else if unsigned, `lsr` most significant<br />Finally `ror` the others going down |
-| Multiplication by 2 | If unsigned: `lsl` least significant then `rol` the others going up<br />Else if 2's complement, do something like below. |
-|                     |                                                              |
+| Multiplication by 2 | `lsl` least significant then `rol` the others going up. <br />Doesn't matter if signed |
 
-for multiplication by 2 with 2's complement, with some 24-bit value in `top:middle:bottom`:
+![image-20210606174246607](images/image-20210606174246607.png)
 
-```
-inc counter
-lsl bottom
-rol middle
-mov temp, top
+If needed, remember to `push r16`; `in r16, SREG`; `push r16` and then `pop r16`; `out SREG, r16`; `pop r16` at beginning and end of ISR. Return using `reti`. C ISRs require ISR macro in `#include <avr/interrupt.h>`.
 
-; following two instructions don't affect carry
-andi temp, 0b10000000  ; mask off sign, carry kept
-ori temp,  0b01111111  ; set other bits to 1 so we can apply mask
+To fully set up interrupts, need to write an ISR, `sei`, write 1 to specific flag in interrupt mask register, and write 1 to interrupt flag.
 
-rol top
-and top, temp  ; restore sign bit by applying mask
-```
+### Assembly Process and Linking
 
+`call`, `jmp`, `lds` and `sts` are the only 32-bit instructions for AVR. The rest take up 1 cell.
 
+- `.dseg`, `.cseg`, `.eseg`: changes to specified segment. Default is `.cseg`.
+- `.byte n` reserves `n` bytes of space, must be in `.dseg`.
+- `.db` and `.dw` define 1 byte / 1 word (16-bit) in `.cseg`/`.eseg`.
+- `.def temp=r16` is alias for registers, `.equ sreg=0x3f` for constants, mutable. `.set` immutable.
+- `.org num` sets location counter for current segment to `num`. 
 
-### Assembly Process
+<img src="images/image-20210607161241268.png" alt="image-20210607161241268" style="zoom: 67%;" />
 
 
-
-## C
-
-### Programming
-
-
-
-### Linking and Compilation
-
-
-
-# Other ATmega324A Features
 
 ## Timers/Counters
 
+$$
+\mathrm{OCR1A} = \frac{f_{sys}}{\mathrm{PRE} * f_{osc}} - 1
+$$
 
+<img src="images/image-20210607231704287.png" alt="image-20210607231704287" style="zoom:33%;" />
 
-### Seven-Segment Display
+Usually DP is MSB on left, then G through to A, where A is LSB.
 
+For **PWM**:
+freq to clock period with 1MHz clock: 1,000,000 / freq
+duty cycle (%) to pulse width: dutycycle*clockperiod/100
+then OCR1B = pulse_width - 1; OCR1A = clock_period - 1;
 
+## USART
 
-## ADC
+$$
+\mathrm{UBRRn} = \frac{f_{osc}}{16 \cdot \mathrm{BAUD}} - 1
+$$
 
+where $\mathrm{BAUD}$ is baud rate e.g. 9600. Usually use asynchronous normal mode.
 
+Frame is initially at logic 1, then start bit is 0, then write 5-9 data bits, then one parity bit, then 1 or 2 stop bits, then back to logic 1. Parity bit is set to either make total amount of high bits even or odd. Can detect if 1 bit has been flipped, but not 2 bits flipped or which one has been flipped.
 
-## SPI
+## Data Storage and Transfer
 
+$$
+\begin{align*}
+\text{avg access time} &= \frac{\text{e-e seek time}}{3} + \frac{\text{rot. time}}{2} \\
+\text{rot. time} &= \frac{60}{\text{speed (rpm)}} \\
+\text{total wasted space} &= \text{no. files on disk} \, \times \frac{\text{block size}}{2}
+\end{align*}
+$$
 
+<img src="images/image-20210607225028926.png" alt="image-20210607225028926" style="zoom:33%;" />
 
-## Serial I/O
+Latency: what's the time taken for one instruction to come out after it goes in pipeline?
+Throughput: how often can you get one instruction in?
 
-
-
-# Data Storage and Transfer
-
-## Types of Computer Memory
-
-
-
-## File System
-
-
-
-## Buses
-
-
-
-# Important Documents
-
-- timers 1-3 data
-- register summary
-- instruction set summary
-- interrupt vector list
-
+For $2^n$ cells, $\text{address width} = n - \left( \log_2 \text{data width} - \log_2 8 \right)$, where 8 is number of bits in byte. From data width = 8, every time you double data width, decrement address width.
