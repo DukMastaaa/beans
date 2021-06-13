@@ -1,12 +1,12 @@
 ## Week 7
 
 **Why are ceramics brittle?**\
-Different atoms in the crystal structure so harder to deform, and covalent/ionic bonding stronger than metallic bonding.
+Different atoms in the crystal structure with few slip planes so hard to get dislocations moving, and covalent/ionic bonding stronger than metallic bonding.
 
 **What is responsible for plastic deformation?**\
 Movement of dislocations.
 
-**Diffusion requires what? **\
+**Diffusion requires what?**\
 Need a defect for atom to move into, and sufficient energy to break bonds and distort lattice.
 
 **What's the difference between vacancy and interstitial diffusion?**\
@@ -75,3 +75,47 @@ Both inhibit dislocation motion, but precipitation hardening is when you use a *
 
 ## Week 10
 
+**Explain how typical Young's Modulus values change between linear, branched, crosslinked and networked polymers.**\
+Linear polymers have covalent bonds within chains, but have weak Van der Waals and hydrogen bonds between chains. This leads to a low Young's modulus and yield strength as the intermolecular bonds are weak. Branched polymers have side chains - more contact with other molecules, would have slightly higher Young's modulus. Crosslinked polymers have covalent bonds connecting adjacent chains, giving a higher E than linear polymers. Network polymers have more than 3 covalent bonds between chains, forming a 3D network. This would, yet again, have a higher Young's modulus.
+
+**What's the difference between thermoplastics and thermosets?**\
+Thermoplastics are usually linear polymers and soften when heated, which are either amorphous (random chain arrangement) or semi-crystalline. Thermosets are cross-linked polymers with higher E, and just decompose when heated to sufficient temperatures. The stability from the crosslinking makes them chemical and creep resistant.
+
+**What happens at the glass transition temperature?**\
+Tg is the temperature at which chains contract too much to flow smoothly past each other. Above Tg, E and strength decrease but ductility increases (more energy for them to flow), and below Tg polymer becomes brittle.
+
+**Why are brittle materials with low K1c vulnerable to catastrophic brittle failure?**\
+For tough and ductile materials, crack initiation is difficult as strength is high and crack propagation is difficult due to ductility. Plastic deformation occurs at the crack tip which reduces stress concentration. However, in brittle materials, such plastic deformation is not possible, so crack propagation is very easy. This leads to catastrophic failure if a crack is made.
+
+**What is leak-before-failure for pressure vessel design?**\
+Make the wall of the pressure vessel less than the critical crack length for the material and load. So the crack will penetrate through the wall causing the contents to leak before the entire vessel catastrophically fails.
+
+**What properties are we looking for in the matrix and fibre in a fibre-reinforced composite?**\
+Matrix materials should be ductile and have E less than the fibre. Fibres add stiffness, strength and improve the toughness of the composite. 
+
+**Is having a slightly weak interface necessarily a problem for fibre-reinforced composites?**\
+Although a strong interface between matrix and fibre improves overall stiffness, a slightly weaker interface will improve the overall toughness (there's more 'give' so area under stress-strain curve will be larger).
+
+**What effect does fibre length have on a FRC's strength?**\
+The stress transmitted through the interface between matrix and fibre is dependent on the interfacial bond strength, or alternatively, the shear yield strength of the matrix. If the length of the fibres are equal to the critical length, maximum fibre load is only achieved at the centre of the fibre. We should make this longer so the stress is transferred over a larger length of fibre (fibres should be much better at withstanding this tensile stress than the matrix). However, if the fibres are really small, the matrix will be doing most of the work as there aren't opportunities for the fibre to take on maximum load. This reduces the strength of the composite.\
+Note: for a fibre to be considered continuous, it must have at least **15x** the critical length. Can calculate critical length with $l_c = \frac{\sigma_f d}{2 \tau_c}$, where $\sigma_f$ is tensile strength of fibre, $d$ is fibre diameter and $\tau_c$ is matrix shear strength.
+
+**Are there any advantages to having fibre length less than the critical length?**\
+Actually yes; although the matrix will be taking most of the load, fibres get pulled out of the matrix when cracks propagate. This increases energy required to propagate and thus increases fracture toughness.
+
+**What does a stress-strain curve of a typical FRC look like?**\
+Consider a brittle ceramic fibre and a ductile polymer matrix. The curve has a linear region until the matrix *yields*, at which the fibres carry extra load until they fracture (decreased E for this region). As the fibres break, stress drops to the stress carried by the matrix and is sustained by the matrix until failure.
+
+**Describe the relationship between FRC strength, fibre volume fraction and the fibre orientation to applied load.**\
+In the stress-strain curve described above, we want the fibres to fracture after the matrix yields to increase the strength as much as possible. There is a critical volume fraction where if volume fraction is increased below Vfcrit, fibres will actually fracture sooner before the matrix yields so strength will be very low. Above Vfcrit, the matrix will yield first as intended so increasing Vf will then increase strength. Ideally this is piecewise linear but I'm not sure if that's true in practice.\
+The failure mode of a composite depends on the orientation of the fibre to the applied stress.
+
+- Stress parallel to fibre: failure governed by T strength of fibre, relatively *high*
+- Angle increases from parallel to perpendicular: failure governed by shear strength of matrix, relatively *low*
+- Stress perpendicular to fibre: failure governed by T strength of matrix, not as high as T strength of fibre.
+
+Worst option is to orient at around 45°.
+
+## Week 11
+
+creepy
