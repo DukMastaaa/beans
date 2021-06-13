@@ -4,6 +4,7 @@ notes for various subjects from school/uni
 ## Uni Courses
 - INFS1200 Introduction to Information Systems
 - CSSE2010 Introduction to Computer Systems
+- MECH2300 Structures and Materials (revision only)
 
 ## School Subjects
 - Maths B
