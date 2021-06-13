@@ -117,6 +117,8 @@ Set of arrows coming out from each state must be complete.
 
 Similar process to construct counter circuits. For combination lock, the entire input state doesn't need to be stored every time; can make pure combinational circuit checking if value is expected, and then only store bool value if input matches.
 
+<img src="images/circuitsymbols.png" alt="circuitsymbols" style="zoom: 50%;" />
+
 ## AVR CPU
 
 <img src="images/image-20210606172239547.png" alt="image-20210606172239547" style="zoom: 50%;" />
