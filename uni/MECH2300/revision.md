@@ -118,4 +118,64 @@ Worst option is to orient at around 45°.
 
 ## Week 11
 
-creepy
+**What is the difference between primary, secondary and tertiary creep?**\
+Primary creep is characterised by an initial instantaneous strain (from stress-strain curve), with a decreasing creep rate from strain hardening. Secondary creep has a constant, steady-state creep rate due to the competing processes of strain hardening and recovery (this is at elevated temperature). Tertiary creep has an increasing creep rate and is the last stage before rupture. This could be due to material imperfections which cause stress concentrations, or where the material necks so stress increases.
+
+**Compare dislocation creep and diffusion creep.**\
+Dislocation creep occurs at high stresses and involves movement of dislocations past precipitates. At normal temperatures, precipitates act as a barrier to dislocation movement (which is the purpose of precipitation hardening). However, at high temperatures, atoms can actually diffuse perpendicular to the direction of the precipitate so that the dislocation moves out of the way and continues unobstructed. This vertical movement is called dislocation *climb*, and the horizontal movement through precipitates is called dislocation *glide*. Both combined cause dislocation creep.\
+Diffusion creep can be categorised as either bulk diffusion creep or grain boundary diffusion creep, but both elongate grains and cause a strain parallel to stress direction. Grain boundary diffusion creep is when atoms in grain boundary diffuse and occurs at lower temperatures compared to bulk diffusion creep (because of the internal energy), where atoms diffuse from grain interior towards stress direction.
+
+**What can we do to reduce the effect of creep?**\
+Use a material with a higher melting temperature as the threshold for creep to start is dependent on Tm. Introduce more precipitates by precipitation hardening so even if dislocations climb, there's still a lot to get through. Use a material that has a large grain size or is made out of a single crystal to nearly eliminate grain boundaries so diffusion creep can be reduced.
+
+**What is the mechanism behind fatigue?**\
+We start off with crack initiation, which is basically just when you push in and then pull out on the material, and it forms a microscopic crack on the boundary. Recall that we must have a fluctuating load for fatigue.\
+Then, we have crack propagation, which is where the crack propagates perpendicularly to the applied stress due to alternating tension (crack opens) and compression (crack closes, surface area pushes through and increases length).\
+Lastly, we have final failure, where the material fails rapidly once a critical crack length is reached. This is typically brittle failure and is rapid.
+
+**What changes can we see under a microscope during fatigue?**\
+Can't see much for crack initiation as cracks can be just several atoms thick. Cracks propagating leaves back striations or beachmarks on the material, which look like parallel lines indicating a crack has passed through. We're looking for rapid failure areas to indicate the final failure stage.
+
+**From a material standpoint, how can we avoid fatigue in components?**\
+Material properties are important such as fracture toughness, but we need to ensure the surface is smooth and doesn't have any stress concentration areas (no sharp edges). Shot peening and case hardening are processes which can help with this.
+
+**What is the strain response of pure elastic, viscous and viscoelastic polymers to a constant load?**\
+Pure elastic polymers have constant strain at constant load, and have instantaneous increase and decrease in strain when load is applied/removed. Purely viscous polymers gradually increase strain while the load is applied and do not recover strain afterwards.\
+Most polymers are viscoelastic, displaying an initial instantaneous and then gradual increase when load is applied, an instantaneous partial recovery then a gradual decrease when load is removed. Not all strain is recovered. 
+
+**Describe the differences in the relationship between relaxation modulus and temperature for amorphous, lightly cross-linked and crystalline polystyrene.**\
+this is a lot to explain aaa, i'll just put the image here
+
+<img src="images/image-20210614121246270.png" alt="image-20210614121246270" style="zoom:50%;" />
+
+**How is the mechanism for creep different in polymers compared to metals?**\
+Creep in polymers is caused by molecules slipping past each other, not by vacancies or diffusion as in metals or ceramics. Also, the temperature relative to Tg is important (see previous image).
+
+## Week 13
+
+**What are three necessary conditions for corrosion?**\
+We need a material being corroded, an environment doing the corrosion, and an interface between the material and the environment. 
+
+**What properties of a metal and its oxide contribute to forming a coherent oxide film?**\
+
+1. We want a P-B ratio between 1 and 2, indicating that compressive stress will develop in the film as it forms, but the film won't be porous or unprotective.
+2. The oxide should stick to the metal.
+3. Both oxide and metal should have similar thermal expansion coefficient, because if the metal's is higher then it will push against the oxide and encourage it to flake off.
+4. Since oxide layer growth is controlled by the diffusivity of the ions in oxide, having a high melting point and good plasticity at high temperatures (for the oxide) will decrease diffusion rates.
+
+To prevent dry oxidation, we can apply our own protective coating like paint (removing interface) or add alloying elements to achieve better P-B ratio.
+
+**How can we use the EMF series to predict whether a corrosion reaction will be spontaneous or not?**\
+Recall that for a metal to dissolve, the driving force is Gibbs free energy $\Delta G = -EnF$ with $E$ as voltage. If $E > 0$ then $\Delta G < 0$ so spontaneous; if $E < 0$ then $\Delta G > 0$ so non-spontaneous.\
+To find E from EMF series, $E = E_{cathode} - E_{anode}$. The metal is most likely the anode as it's the one being oxidised (oxidation is loss, OIL).
+
+**How can we design against galvanic corrosion?**\
+
+- Avoid dissimilar metals
+- Electrically insulate the different metals
+- Make the critical component the *cathode*
+  - If critical component has to be anode, make surface area larger. Not sure what this does tbh
+- Use a sacrificial anode: connect a 3rd material which acts as anode to both, so critical anode is now cathode.
+- Galvanise: coat Fe with Zn to form a barrier as Zn more reactive than Fe
+- Impressed current: supply electrons from some external voltage source to encourage component to be a cathode (it's gaining electrons so it doesn't oxidise).
+
