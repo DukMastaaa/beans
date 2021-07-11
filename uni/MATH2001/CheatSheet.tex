@@ -1,0 +1,293 @@
+% \documentclass[a4paper,landscape,columns=2]{cheatsheet}
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[margin=8mm]{geometry}
+
+\input{mymathpreamble.tex}
+
+\usepackage{pdflscape}
+
+\usepackage{multicol}
+\setlength{\columnsep}{0.8cm}
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+
+\usepackage{tcolorbox}
+
+\setcounter{secnumdepth}{0}  % get rid of section numbering - no need to use \section*
+
+\begin{document}
+
+\begin{landscape}
+\begin{multicols}{3}
+
+    \section{Differential Equations}
+
+    \[y' + a(x) y = b(x) \longrightarrow h(x) = e^{\int a(x) \deriv x}\]
+    %
+    \begin{align*}
+        \text{2 distinct \(\lambda\):} \enspace y_{H} &= c_1 e^{\lambda_{1} x} + c_2 e^{\lambda_{2} x} \\
+        \text{1 repeated \(\lambda\):} \enspace y_{H} &= c_1 x e^{\lambda x} + c_2 e ^{\lambda x} \\
+        \lambda = \alpha \pm \omega i\text{:} \enspace y_{H} &= e^{\alpha x} \left(c_1 \cos \omega x + c_2 \sin \omega x\right).
+    \end{align*}
+    %
+    \begin{align*}
+        k e^{\alpha x} &\longrightarrow ce^{\alpha x} \\
+        k x^{n} &\longrightarrow \sum_{i=0}^{n} c_{i} x^{i} \\
+        k \cos \alpha x \,\text{or}\, k \sin \alpha x &\longrightarrow c_1 \cos \alpha x + c_2 \sin \alpha x \\
+        \left(\cdots\right) e^{\alpha x} &\longrightarrow \left(\cdots\right) e^{\alpha x}
+    \end{align*}
+    %
+    \[W(y_1, y_2)(x) = \det \begin{pmatrix}
+        y_1 & y_2 \\ 
+        y_1' & y_2' \\ 
+    \end{pmatrix} = y_1 y_2' - y_2 y_1'\]
+    %
+    \begin{align*}
+        r &= y'' + py' + qy & y_{P} &= uy_1 + vy_2 \\
+        u &= - \int \frac{y_2 r}{W} \deriv x & v &= \int \frac{y_1 r}{W} \deriv x
+    \end{align*}
+    %
+    \begin{align*}
+        \cosh x &= \frac{e^x + e^{-x}}{2} & \sinh x &= \frac{e^x - e^{-x}}{2} \\
+        \cosh ix &= \cos x & \sinh ix &= i \sin x
+    \end{align*}
+
+    \section{Projections and Orthonormal Bases}
+
+    \[P_{\beta' \to \beta''} P_{\beta \to \beta'} = P_{\beta \to \beta''}\]
+    %
+    \begin{align*}
+        \norm{\vec{v}} &= \sqrt{\inner{\vec{v}}{\vec{v}}} \\
+        d(\vec{u}, \vec{v}) &= \norm{\vec{u} - \vec{v}} \\
+        \abs{\inner{\vec{u}}{\vec{v}}} &\leq \norm{\vec{u}} \norm{\vec{v}} \\
+        \norm{\vec{u} + \vec{v}} &\leq \norm{\vec{u}} + \norm{\vec{v}}
+    \end{align*}
+    %
+    \[
+        \norm{\vec{u} + \vec{v}}^{2} = \norm{\vec{u}}^{2} + \norm{\vec{v}}^{2} \iff \inner{\vec{u}}{\vec{v}} = 0
+    \]
+    %
+    \begin{align*}
+        U^{\perp} &= \left\{ \vec{v} \in V \,\mid\, \inner{\vec{v}}{\vec{u}} = 0 \;\forall \vec{u} \in U \right\} \\
+        \proj_{U} (\vec{v}) &= \inner{\vec{v_1}}{\hat e_{1}} \hat e_{1} + \cdots + \inner{\vec{v}}{\hat e_{k}} \hat e_{k} \\
+    \proj_{U \perp} (\vec{v}) &= \vec{v} - \proj_{U} (\vec{v})
+    \end{align*}
+    %
+    \[A\vec{x} = \vec{b} \longrightarrow A^{\tpose} A \vec{x} = A^{\tpose} \vec{b}
+    \longrightarrow \vec{x} = \left(A^{\tpose} A\right)^{-1} A^{\tpose} \vec{b}\]
+
+    \section{Matrix-Related Computation}
+
+    \[
+        A\vec{x} = \lambda \vec{x} \quad \det (A - \lambda I) = 0 \quad (A - \lambda I) \vec{x} = \vec{0}
+    \]
+    %
+    \(AP = PD\), where \(A = PDP^{-1}\) for diagonalisation and \(A = PDP^{\tpose}\) for orthogonal diagonalisation.
+    \[
+        P = \begin{bmatrix}
+            \vec{v_1} & \vec{v_2} & \cdots \\ 
+        \end{bmatrix}
+        \quad
+        D = \begin{pmatrix}
+            \lambda_1 & 0 & 0 \\ 
+            0 & \ddots & 0 \\ 
+            0 & 0 & \lambda_{n} \\ 
+        \end{pmatrix}
+    \]
+    \(P\)'s vectors need to be \emph{orthonormal} when orthogonally diagonalising.
+    %
+    \begin{align*}
+        ax^{2} + by^{2} + cxy &\longrightarrow \begin{pmatrix}
+            a & c/2 \\ 
+            c/2 & b \\ 
+        \end{pmatrix} \\
+        \begin{aligned}
+            ax^{2} &+ by^{2} + cz^{2} + dxy\\
+            &+ exz + fyz
+        \end{aligned}
+         &\longrightarrow \begin{pmatrix}
+            a & d/2 & e/2 \\ 
+            d/2 & b & f/2 \\ 
+            e/2 & f/2 & c \\ 
+        \end{pmatrix}
+    \end{align*}
+    %
+    \[\vec{x}^{\tpose} A \vec{x} + K \vec{x} + c = 0\]
+    %
+    When orthogonally diagonalising coefficient matrix of quadratic form, arrange column vectors of
+    \(P\) such that \(\det P = +1\).
+
+    \section{Taylor Series and Critical Points}
+
+    \[H_{f} = \begin{pmatrix}
+        f_{x_{1 x_{1}}} & \cdots & f_{x_{1} x_{n}} \\ 
+        \vdots & \ddots & \vdots \\ 
+        f_{x_{n} x_{1}} & \cdots & f_{x_{n} x_{n}} \\ 
+    \end{pmatrix}\]
+    %
+    \begin{align*}
+        f(\vec{x}) &\approx f(\vec{x_0}) + \left(\grad f (\vec{x_0})\right)^{\tpose} (\vec{x} - \vec{x_0}) \\
+        &\quad + \frac{1}{2} (\vec{x} - \vec{x_0})^{\tpose} H_{f}(\vec{x_0}) (\vec{x} - \vec{x_0})^{\tpose} + \cdots
+    \end{align*}
+    %
+    \[
+        f(\vec{x} + \vec{h}) \approx \sum_{l=0}^{\infty} \frac{1}{l!} \left(\vec{h} \cdot \grad\right)^{l} f(\vec{x})
+    \]
+    %
+    \begin{itemize}
+        \item Minimum: \(\lambda_{i} > 0 \,\forall i\)
+        \item Maximum: \(\lambda_{i} < 0 \,\forall i\)
+        \item Saddle: there are \(\lambda\) with different signs
+        \item Inconclusive: there exist \(\lambda_{i} = 0\) and non-zero \(\lambda\) have same sign
+    \end{itemize}
+
+    \section{Double and Triple Integrals}
+
+    For \(a, b, c, d \in \mathbb{R}\),
+    \[
+        \int_{a}^{b} \int_{c}^{d} f(x) g(y) \deriv y \deriv x
+        = \left(\int_{a}^{b} f(x) \deriv x\right) \left(\int_{c}^{d} g(y) \deriv y\right)
+    \]
+    %
+    \begin{align*}
+        \mathrm{area} &= \iint_{D} 1 \deriv A  &
+        \mathrm{average} &= \frac{\iint_{D} f(x, y) \deriv A}{\iint_{D} 1 \deriv A} \\
+        \mathrm{volume} &= \iiint_{V} 1 \deriv V  &
+        \mathrm{average} &= \frac{\iiint_{V} f(x, y, z) \deriv V}{\iiint_{V} 1 \deriv v}
+    \end{align*}
+    %
+    \begin{multicols*}{2}
+        2D case:
+        %
+        \begin{align*}
+            &\text{2D case} \\
+            m &= \iint_D \rho(x, y) \deriv A \\
+            M_y &= \iint_D x \rho(x, y) \deriv A \\
+            M_x &= \iint_D y \rho(x, y) \deriv A
+        \end{align*}
+        %
+        \vfill
+        \columnbreak
+        %
+        3D case:
+        %
+        \begin{align*}
+            m &= \iiint_V \rho(x, y, z) \deriv V \\
+            M_{yz} &= \iiint_V x \rho(x, y, z) \deriv V \\
+            M_{xz} &= \iiint_V y \rho(x, y, z) \deriv V \\
+            M_{xy} &= \iiint_V z \rho(x, y, z) \deriv V
+        \end{align*}
+    \end{multicols*}
+    %
+    \[\bar x = \frac{M_{yz}}{m} \quad \bar y = \frac{M_{xz}}{m} \quad \bar z = \frac{M_{xy}}{m}\]
+    For 2D, \(M_{yz} = M_y\), \(M_{xz} = M_x\), \(M_{xy} = 0\).
+
+    \section{Coordinate Systems}
+
+    Polar: \(x = r \cos \theta, y = r \sin \theta\) so \(r^{2} = x^{2} + y^{2}\) and \(\abs{J} = r\).
+
+    Cylindrical: same as polar but with \(z = z\), \(\abs{J} = r\).
+
+    Spherical: \(x = r \cos \theta \sin \varphi, y = r \sin \theta \sin \varphi, z = r \cos \varphi\) so
+    \(r^{2} = x^{2} + y^{2} + z^{2}\), \(x^{2} + y^{2} = r^{2} \sin \varphi\) and \(\abs{J} = r^{2} \sin \varphi\).
+    \(\theta\) is angle along \(x\)-\(y\) plane, \(\varphi\) is angle from point to \(z\)-axis.
+    %
+    \[
+        \mathrm{jacobian} = \abs{J} = \abs{
+            \det \begin{pmatrix}
+                \pfrac{x}{u} & \pfrac{x}{v} & \pfrac{x}{w} \\ 
+                \pfrac{y}{u} & \pfrac{y}{v} & \pfrac{y}{w} \\ 
+                \pfrac{z}{u} & \pfrac{z}{v} & \pfrac{z}{w} \\ 
+            \end{pmatrix}
+        }
+    \]
+
+    \begin{tcolorbox}[colframe=red!75!black]
+        ducky's MATH2001 cheat sheet
+    \end{tcolorbox}
+
+\end{multicols}
+\end{landscape}
+\pagebreak
+
+    \section{Vector Calculus}
+
+    \begin{align*}
+        \grad &= \left(\pfrac{}{x}, \pfrac{}{y}, \pfrac{}{z}\right) \\
+        D_{\uvec{u}}(f) &= \left(\grad f\right) \cdot \uvec{u}
+    \end{align*}
+    %
+    \[
+        W = \int_{C} \vec{F} \cdot \deriv \vec{r}
+        = \int_{a}^{b} \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \deriv t
+    \]
+    %
+    \[
+        \int_{C} \grad f \cdot \deriv \vec{r} = f(\vec{r}(b)) - f(\vec{r}(a))
+    \]
+    %
+    \[
+        \iint_{D} \pfrac{F_2}{x} - \pfrac{F_1}{y} \deriv A = \oint_{\partial D} \vec{F} \cdot \deriv \vec{r}
+    \]
+    %
+    \[
+        \mathrm{flux} = \int_{C} \vec{v} \cdot \vec{n} \deriv S 
+        = \int_{a}^{b} \vec{v}(\vec{r}(t)) \cdot
+        \underbrace{
+            \left( \vec{r} '(t) \times \uvec{k} \right)
+        }_{\text{check orientation}}
+        \deriv t
+    \]
+    %
+    \[
+        \div \vec{v} = \grad \cdot \vec{v} = \pfrac{v_1}{x} + \pfrac{v_2}{y} + \pfrac{v_3}{z}
+    \]
+    %
+    \[
+        \oint_{\partial D} \vec{v}(x, y) \cdot \vec{n} \deriv S
+        = \iint_{D} \grad \cdot \vec{v}(x, y) \deriv A
+    \]
+    %
+    \[
+        \left(\vec{r_{u}}(a, b) \times \vec{r_{v}}(a, b)\right) \cdot
+        \left( \begin{pmatrix}
+            x & y & z \\ 
+        \end{pmatrix}
+        - \vec{r}(a, b)
+        \right) = 0
+    \]
+    % 
+    \[
+        \iint_{S} f(x, y, z) \deriv S =
+        \iint_{D} f(\vec{r}(u, v)) \norm{\vec{r_{u}} \times \vec{r_{v}}} \deriv A
+    \]
+    % 
+    \[
+        \mathrm{flux} = \iint_{S} \vec{v} \cdot \vec{n} \deriv S =
+        \iint_{D} \vec{v} \cdot \left(\vec{r_{u}} \times \vec{r_{v}}\right) \deriv A
+    \]
+    % 
+    \[
+        \oiint_{S} \vec{F} \cdot \vec{n} \deriv S = 
+        \iiint_{V} \grad \cdot \vec{F} \deriv V
+    \]
+    % 
+    \[
+        \curl \vec{v} = \grad \times \vec{v} = \begin{vmatrix}
+            \uvec{i} & \uvec{j} & \uvec{k} \\
+            \pfrac{}{x} & \pfrac{}{y} & \pfrac{}{z} \\
+            v_1 & v_2 & v_3
+        \end{vmatrix}
+    \]
+    % 
+    \[
+        \iint_{S} \left(\grad \times \vec{F}\right) \cdot \vec{n} \deriv S
+        = \oint_{\partial S} \vec{F} \cdot \deriv \vec{r}
+    \]
+    
+    this is a test \(A^{\tpose} A^{-\tpose}\)
+
+\end{document}
