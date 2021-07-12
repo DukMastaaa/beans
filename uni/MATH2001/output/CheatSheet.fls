@@ -157,6 +157,8 @@ INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\multicol.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\multicol.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty
+INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\tabularx.sty
+INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\tabularx.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tcolorbox\tcolorbox.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tcolorbox\tcolorbox.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pgf\basiclayer\pgf.sty
@@ -207,6 +209,8 @@ INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\verbatim.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\verbatim.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\environ\environ.sty
 INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\environ\environ.sty
+INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty
+INPUT C:\Users\JB\AppData\Local\Programs\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty
 INPUT d:\GitHub\beans\uni\MATH2001\output\CheatSheet.aux
 INPUT d:\GitHub\beans\uni\MATH2001\output\CheatSheet.aux
 OUTPUT d:\GitHub\beans\uni\MATH2001\output\CheatSheet.aux

@@ -12,13 +12,24 @@
 
 \usepackage{titlesec}
 \titleformat*{\section}{\large\bfseries}
-\titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+\titlespacing*{\section}{0pt}{2ex}{2ex}  % 4.3ex plus .2ex
 
+\usepackage{tabularx}
 \usepackage{tcolorbox}
+\usepackage{enumitem}
 
 \setcounter{secnumdepth}{0}  % get rid of section numbering - no need to use \section*
 
+% https://tex.stackexchange.com/a/390653
+\newlength{\interwordspace}
+\settowidth{\interwordspace}{\ }
+
 \begin{document}
+
+% \setlength{\abovedisplayskip}{0pt}
+% \setlength{\belowdisplayskip}{0pt}
+% \setlength{\abovedisplayshortskip}{0pt}
+% \setlength{\belowdisplayshortskip}{0pt}
 
 \begin{landscape}
 \begin{multicols}{3}
@@ -138,10 +149,10 @@
     \]
     %
     \begin{itemize}
-        \item Minimum: \(\lambda_{i} > 0 \,\forall i\)
-        \item Maximum: \(\lambda_{i} < 0 \,\forall i\)
+        \item Minimum: all \(\lambda > 0\)
+        \item Maximum: all \(\lambda < 0\)
         \item Saddle: there are \(\lambda\) with different signs
-        \item Inconclusive: there exist \(\lambda_{i} = 0\) and non-zero \(\lambda\) have same sign
+        \item Inconclusive: there are some \(\lambda\) which equal 0 and the rest (non-zero \(\lambda\)) have the same sign
     \end{itemize}
 
     \section{Double and Triple Integrals}
@@ -159,44 +170,52 @@
         \mathrm{average} &= \frac{\iiint_{V} f(x, y, z) \deriv V}{\iiint_{V} 1 \deriv v}
     \end{align*}
     %
-    \begin{multicols*}{2}
-        2D case:
-        %
-        \begin{align*}
-            &\text{2D case} \\
-            m &= \iint_D \rho(x, y) \deriv A \\
-            M_y &= \iint_D x \rho(x, y) \deriv A \\
-            M_x &= \iint_D y \rho(x, y) \deriv A
-        \end{align*}
-        %
-        \vfill
-        \columnbreak
-        %
-        3D case:
-        %
-        \begin{align*}
-            m &= \iiint_V \rho(x, y, z) \deriv V \\
-            M_{yz} &= \iiint_V x \rho(x, y, z) \deriv V \\
-            M_{xz} &= \iiint_V y \rho(x, y, z) \deriv V \\
-            M_{xy} &= \iiint_V z \rho(x, y, z) \deriv V
-        \end{align*}
-    \end{multicols*}
+    \begin{align*}
+        m &= \iiint_V \rho(x, y, z) \deriv V  &  M_{yz} &= \iiint_V x \rho(x, y, z) \deriv V \\
+        M_{xz} &= \iiint_V y \rho(x, y, z) \deriv V  &  M_{xy} &= \iiint_V z \rho(x, y, z) \deriv V
+    \end{align*}
     %
     \[\bar x = \frac{M_{yz}}{m} \quad \bar y = \frac{M_{xz}}{m} \quad \bar z = \frac{M_{xy}}{m}\]
-    For 2D, \(M_{yz} = M_y\), \(M_{xz} = M_x\), \(M_{xy} = 0\).
+    %
+    For 2D, use \(\iint_{A} (\cdots) \deriv A\) with \(\rho(x, y)\) and \(z = 0\). Then use
+    \(M_{yz} = M_y\), \(M_{xz} = M_x\), \(M_{xy} = 0\).
 
     \section{Coordinate Systems}
+    % {%
+    %     \def\arraystretch{1.3}
+        \begin{tabularx}{\linewidth}{lX}
+        \hline
+        Polar       & {%
+                    \(
+                    \begin{aligned}[t]
+                        x &= r \cos \theta  &  y &= r \sin \theta \\
+                        r^2 &= x^2 + y^2  &  \abs{J} &= r
+                    \end{aligned}
+                    \)
+                    } \\ \hline
+        Cylindrical & Polar but with \(z\) parameter \newline \(\abs{J} = r\) \\ \hline
+        Spherical   & {
+                    \(
+                    \begin{aligned}[t]
+                        x &= r \cos \theta \sin \varphi  &  y &= r \sin \theta \sin \varphi \\
+                        z &= r \cos \varphi  &  r^2 &= x^2 + y^2 + z^2 \\
+                        \abs{J} &= r^2 \sin \varphi  &  &
+                    \end{aligned}
+                    \)
+                    } \\ \hline
+        \end{tabularx}
+    % }
+    %
+    % Polar: \(x = r \cos \theta, y = r \sin \theta\) so \(r^{2} = x^{2} + y^{2}\) and \(\abs{J} = r\).
 
-    Polar: \(x = r \cos \theta, y = r \sin \theta\) so \(r^{2} = x^{2} + y^{2}\) and \(\abs{J} = r\).
+    % Cylindrical: same as polar but with \(z = z\), \(\abs{J} = r\).
 
-    Cylindrical: same as polar but with \(z = z\), \(\abs{J} = r\).
-
-    Spherical: \(x = r \cos \theta \sin \varphi, y = r \sin \theta \sin \varphi, z = r \cos \varphi\) so
-    \(r^{2} = x^{2} + y^{2} + z^{2}\), \(x^{2} + y^{2} = r^{2} \sin \varphi\) and \(\abs{J} = r^{2} \sin \varphi\).
-    \(\theta\) is angle along \(x\)-\(y\) plane, \(\varphi\) is angle from point to \(z\)-axis.
+    % Spherical: \(x = r \cos \theta \sin \varphi, y = r \sin \theta \sin \varphi, z = r \cos \varphi\) so
+    % \(r^{2} = x^{2} + y^{2} + z^{2}\), \(x^{2} + y^{2} = r^{2} \sin \varphi\) and \(\abs{J} = r^{2} \sin \varphi\).
+    % \(\theta\) is angle along \(x\)-\(y\) plane, \(\varphi\) is angle from point to \(z\)-axis.
     %
     \[
-        \mathrm{jacobian} = \abs{J} = \abs{
+        \mathrm{Jacobian} = \abs{J} = \abs{
             \det \begin{pmatrix}
                 \pfrac{x}{u} & \pfrac{x}{v} & \pfrac{x}{w} \\ 
                 \pfrac{y}{u} & \pfrac{y}{v} & \pfrac{y}{w} \\ 
@@ -205,89 +224,118 @@
         }
     \]
 
-    \begin{tcolorbox}[colframe=red!75!black]
-        ducky's MATH2001 cheat sheet
+    \begin{tcolorbox}[colframe=red!75!black, arc=0pt, outer arc=0pt]
+        ducky's MATH2001 cheat sheet --- \today
     \end{tcolorbox}
 
 \end{multicols}
 \end{landscape}
 \pagebreak
 
-    \section{Vector Calculus}
+\section{Vector Calculus}
+\begin{multicols}{2}
 
     \begin{align*}
         \grad &= \left(\pfrac{}{x}, \pfrac{}{y}, \pfrac{}{z}\right) \\
         D_{\uvec{u}}(f) &= \left(\grad f\right) \cdot \uvec{u}
     \end{align*}
     %
-    \[
-        W = \int_{C} \vec{F} \cdot \deriv \vec{r}
-        = \int_{a}^{b} \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \deriv t
-    \]
+    \begin{align*}
+        W &= \int_{C} \vec{F} \cdot \deriv \vec{r} 
+            = \int_{a}^{b} \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \deriv t \\
+        \int_{C} \grad f \cdot \deriv \vec{r} &= f(\vec{r}(b)) - f(\vec{r}(a))
+    \end{align*}
     %
-    \[
-        \int_{C} \grad f \cdot \deriv \vec{r} = f(\vec{r}(b)) - f(\vec{r}(a))
-    \]
-    %
-    \[
-        \iint_{D} \pfrac{F_2}{x} - \pfrac{F_1}{y} \deriv A = \oint_{\partial D} \vec{F} \cdot \deriv \vec{r}
-    \]
-    %
-    \[
-        \mathrm{flux} = \int_{C} \vec{v} \cdot \vec{n} \deriv S 
-        = \int_{a}^{b} \vec{v}(\vec{r}(t)) \cdot
-        \underbrace{
-            \left( \vec{r} '(t) \times \uvec{k} \right)
-        }_{\text{check orientation}}
-        \deriv t
-    \]
-    %
-    \[
-        \div \vec{v} = \grad \cdot \vec{v} = \pfrac{v_1}{x} + \pfrac{v_2}{y} + \pfrac{v_3}{z}
-    \]
-    %
-    \[
-        \oint_{\partial D} \vec{v}(x, y) \cdot \vec{n} \deriv S
-        = \iint_{D} \grad \cdot \vec{v}(x, y) \deriv A
-    \]
+    \begin{align*}
+        \div \vec{v} &= \grad \cdot \vec{v} = \pfrac{v_1}{x} + \pfrac{v_2}{y} + \pfrac{v_3}{z} \\
+        \curl \vec{v} &= \grad \times \vec{v} = 
+            \begin{vmatrix}
+                \uvec{i} & \uvec{j} & \uvec{k} \\
+                \pfrac{}{x} & \pfrac{}{y} & \pfrac{}{z} \\
+                v_1 & v_2 & v_3
+            \end{vmatrix}
+    \end{align*}
     %
     \[
         \left(\vec{r_{u}}(a, b) \times \vec{r_{v}}(a, b)\right) \cdot
-        \left( \begin{pmatrix}
-            x & y & z \\ 
-        \end{pmatrix}
-        - \vec{r}(a, b)
-        \right) = 0
+        \left((x, y, z) - \vec{r}(a, b) \right) = 0
     \]
-    % 
+    %
     \[
         \iint_{S} f(x, y, z) \deriv S =
         \iint_{D} f(\vec{r}(u, v)) \norm{\vec{r_{u}} \times \vec{r_{v}}} \deriv A
     \]
-    % 
-    \[
-        \mathrm{flux} = \iint_{S} \vec{v} \cdot \vec{n} \deriv S =
-        \iint_{D} \vec{v} \cdot \left(\vec{r_{u}} \times \vec{r_{v}}\right) \deriv A
-    \]
-    % 
-    \[
-        \oiint_{S} \vec{F} \cdot \vec{n} \deriv S = 
-        \iiint_{V} \grad \cdot \vec{F} \deriv V
-    \]
-    % 
-    \[
-        \curl \vec{v} = \grad \times \vec{v} = \begin{vmatrix}
-            \uvec{i} & \uvec{j} & \uvec{k} \\
-            \pfrac{}{x} & \pfrac{}{y} & \pfrac{}{z} \\
-            v_1 & v_2 & v_3
-        \end{vmatrix}
-    \]
-    % 
-    \[
+    %
+    \vfill\columnbreak
+    %
+    \begin{align*}
+        \mathrm{flux} &= \int_{C} \vec{v} \cdot \vec{n} \deriv S 
+            = \int_{a}^{b} \vec{v}(\vec{r}(t)) \cdot
+            \underbrace{
+                \left( \vec{r} '(t) \times \uvec{k} \right)
+            }_{\text{check orientation}}
+            \deriv t \\
+        \mathrm{flux} &= \iint_{S} \vec{v} \cdot \vec{n} \deriv S =
+            \iint_{D} \vec{v} \cdot \left(\vec{r_{u}} \times \vec{r_{v}}\right) \deriv A \\
+    \end{align*}
+    %
+    \begin{align*}
+        \iint_{D} \pfrac{F_2}{x} - \pfrac{F_1}{y} \deriv A 
+            &= \oint_{\partial D} \vec{F} \cdot \deriv \vec{r} \\
+        \oint_{\partial D} \vec{v}(x, y) \cdot \vec{n} \deriv S
+            &= \iint_{D} \grad \cdot \vec{v}(x, y) \deriv A \\
+        \oiint_{S} \vec{F} \cdot \vec{n} \deriv S 
+            &= \iiint_{V} \grad \cdot \vec{F} \deriv V \\
         \iint_{S} \left(\grad \times \vec{F}\right) \cdot \vec{n} \deriv S
-        = \oint_{\partial S} \vec{F} \cdot \deriv \vec{r}
-    \]
+            &= \oint_{\partial S} \vec{F} \cdot \deriv \vec{r}
+    \end{align*}
+\end{multicols}
+
+\section{Miscellaneous}
+\begin{multicols}{2}
     
-    this is a test \(A^{\tpose} A^{-\tpose}\)
+    \begin{align*}
+        \int \frac{1}{\sqrt{x^2 + 1}} \deriv x &= \arsinh(x) + c \\
+        \int \frac{1}{\sqrt{x^2 - 1}} \deriv x &= \arcosh(x) + c, x > 1 \\
+        \arsinh(x) &= \ln \left(x + \sqrt{x^2 + 1}\right) \\
+        \arcosh(x) &= \ln \left(x + \sqrt{x^2 - 1}\right), x \geq 1 \\
+        \artanh(x) &= \frac{1}{2} \ln \left(\frac{1 + x}{1 - x}\right), x \in (-1, 1) \\
+    \end{align*}
+
+    For some \(A \in M_{n \times n}(\mathbb{F})\), the following statements are equivalent:
+    \begin{itemize}
+        \item \(A\) is non-singular (\(A^{-1}\) exists)
+        \item Only \(\vec{x} = \vec{0}\) satisfies \(A \vec{x} = \vec{0}\)
+        \item The row-echelon form of \(A\) does not have a row of zeroes
+        \item \(A \vec{x} = \vec{b}\) has a solution for all \(\vec{b} \in \mathbb{R}^n\)
+        \item \(\det A \neq 0\)
+        \item Columns of \(A\) are linearly independent
+        \item Rows of \(A\) are linearly independent
+        \item \(\dim(\nullspace(A)) = 0\)
+        \item \(\rank A = n\)
+        \item \(\lambda = 0\) is not an eigenvalue of \(A\)
+    \end{itemize}
+    %
+    \vfill\columnbreak
+    %
+
+    \(A \in M_{n \times n}(\mathbb{F})\) is diagonalisable (\(A = PDP^{-1}\))
+    \begin{itemize}[leftmargin=1.0cm, labelsep=\interwordspace]
+        \item[iff] \(A\) has \(n\) linearly independent eigenvectors
+        \item[iff] algebraic and geometric multiplicities are equal for every eigenvalue
+    \end{itemize}
+
+    \(A \in M_{n \times n}(\mathbb{R})\) is orthogonally diagonalisable (\(A = PDP^{\tpose}\))
+    \begin{itemize}[leftmargin=1.0cm, labelsep=\interwordspace]
+        \item[iff] \(A\) is symmetric, i.e. \(A = A^{\tpose}\)
+        \item[iff] eigenvectors corresponding to different eigenvalues are orthogonal with respect to the dot product 
+    \end{itemize}
+
+    The complex inner product for \(\vec{u}, \vec{v} \in \mathbb{C}^n\) is defined by
+    \[\vec{u} \cdot \vec{v} = u_1 \bar v_1 + \cdots + u_n \bar v_n = \vec{v}^{*} \vec{u} \in \mathbb{C}\]
+    where \(\bar z\) is the conjugate of \(z\) and \(\vec{v}^{*}\) is the conjugate transpose of \(\vec{v}\). Now,
+    \(\overline{\inner{\vec{u}}{\vec{v}}} = \inner{\vec{v}}{\vec{u}}\).
+
+\end{multicols}
 
 \end{document}
