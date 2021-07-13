@@ -18,6 +18,9 @@
 \usepackage{tcolorbox}
 \usepackage{enumitem}
 
+\usepackage{tikz}
+\usepackage{tikzducks}
+
 \setcounter{secnumdepth}{0}  % get rid of section numbering - no need to use \section*
 
 % https://tex.stackexchange.com/a/390653
@@ -228,7 +231,7 @@
 \end{landscape}
 \pagebreak
 
-\newgeometry{left=8mm,right=8mm,top=20mm,bottom=20mm}
+\newgeometry{left=8mm,right=8mm,top=20mm,bottom=17mm}
 % \vspace*{\fill}
 
 \section{Vector Calculus}
@@ -354,6 +357,14 @@
         \item Parabola: \(x^2 = ky\) or \(y^2 = kx\) for \(k \neq 0\)
     \end{itemize}
 \end{multicols}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[scale=0.3]
+        \duck[graduate=gray!20!black,
+            tassel=red!70!black]
+    \end{tikzpicture} 
+\end{figure}
 
 % \vspace*{\fill}
 
