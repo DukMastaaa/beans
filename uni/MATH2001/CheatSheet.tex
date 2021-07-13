@@ -1,7 +1,7 @@
 % \documentclass[a4paper,landscape,columns=2]{cheatsheet}
 \documentclass[10pt, a4paper]{article}
 
-\usepackage[margin=8mm]{geometry}
+\usepackage{geometry}
 
 \input{mymathpreamble.tex}
 
@@ -24,12 +24,16 @@
 \newlength{\interwordspace}
 \settowidth{\interwordspace}{\ }
 
+\pagenumbering{gobble}
+
 \begin{document}
 
 % \setlength{\abovedisplayskip}{0pt}
 % \setlength{\belowdisplayskip}{0pt}
 % \setlength{\abovedisplayshortskip}{0pt}
 % \setlength{\belowdisplayshortskip}{0pt}
+
+\newgeometry{margin=8mm}
 
 \begin{landscape}
 \begin{multicols}{3}
@@ -47,7 +51,7 @@
     \begin{align*}
         k e^{\alpha x} &\longrightarrow ce^{\alpha x} \\
         k x^{n} &\longrightarrow \sum_{i=0}^{n} c_{i} x^{i} \\
-        k \cos \alpha x \,\text{or}\, k \sin \alpha x &\longrightarrow c_1 \cos \alpha x + c_2 \sin \alpha x \\
+        k \cos \alpha x \text{ or } k \sin \alpha x &\longrightarrow c_1 \cos \alpha x + c_2 \sin \alpha x \\
         \left(\cdots\right) e^{\alpha x} &\longrightarrow \left(\cdots\right) e^{\alpha x}
     \end{align*}
     %
@@ -83,8 +87,8 @@
     %
     \begin{align*}
         U^{\perp} &= \left\{ \vec{v} \in V \,\mid\, \inner{\vec{v}}{\vec{u}} = 0 \;\forall \vec{u} \in U \right\} \\
-        \proj_{U} (\vec{v}) &= \inner{\vec{v_1}}{\hat e_{1}} \hat e_{1} + \cdots + \inner{\vec{v}}{\hat e_{k}} \hat e_{k} \\
-    \proj_{U \perp} (\vec{v}) &= \vec{v} - \proj_{U} (\vec{v})
+        \proj_{U} (\vec{v}) &= \inner{\vec{v_1}}{\uvec{e}[1]} \uvec{e}[1] + \cdots + \inner{\vec{v}}{\uvec{e}[k]} \uvec{e}[k] \\
+    \proj_{U^{\perp}} (\vec{v}) &= \vec{v} - \proj_{U} (\vec{v})
     \end{align*}
     %
     \[A\vec{x} = \vec{b} \longrightarrow A^{\tpose} A \vec{x} = A^{\tpose} \vec{b}
@@ -134,14 +138,14 @@
     \section{Taylor Series and Critical Points}
 
     \[H_{f} = \begin{pmatrix}
-        f_{x_{1 x_{1}}} & \cdots & f_{x_{1} x_{n}} \\ 
+        f_{x_{1} x_{1}} & \cdots & f_{x_{1} x_{n}} \\ 
         \vdots & \ddots & \vdots \\ 
         f_{x_{n} x_{1}} & \cdots & f_{x_{n} x_{n}} \\ 
     \end{pmatrix}\]
     %
     \begin{align*}
         f(\vec{x}) &\approx f(\vec{x_0}) + \left(\grad f (\vec{x_0})\right)^{\tpose} (\vec{x} - \vec{x_0}) \\
-        &\quad + \frac{1}{2} (\vec{x} - \vec{x_0})^{\tpose} H_{f}(\vec{x_0}) (\vec{x} - \vec{x_0})^{\tpose} + \cdots
+        &\quad + \frac{1}{2} (\vec{x} - \vec{x_0})^{\tpose} H_{f}(\vec{x_0}) (\vec{x} - \vec{x_0}) + \cdots
     \end{align*}
     %
     \[
@@ -189,7 +193,7 @@
                     \(
                     \begin{aligned}[t]
                         x &= r \cos \theta  &  y &= r \sin \theta \\
-                        r^2 &= x^2 + y^2  &  \abs{J} &= r
+                        \abs{J} &= r  &  r^2 &= x^2 + y^2
                     \end{aligned}
                     \)
                     } \\ \hline
@@ -205,14 +209,6 @@
                     } \\ \hline
         \end{tabularx}
     % }
-    %
-    % Polar: \(x = r \cos \theta, y = r \sin \theta\) so \(r^{2} = x^{2} + y^{2}\) and \(\abs{J} = r\).
-
-    % Cylindrical: same as polar but with \(z = z\), \(\abs{J} = r\).
-
-    % Spherical: \(x = r \cos \theta \sin \varphi, y = r \sin \theta \sin \varphi, z = r \cos \varphi\) so
-    % \(r^{2} = x^{2} + y^{2} + z^{2}\), \(x^{2} + y^{2} = r^{2} \sin \varphi\) and \(\abs{J} = r^{2} \sin \varphi\).
-    % \(\theta\) is angle along \(x\)-\(y\) plane, \(\varphi\) is angle from point to \(z\)-axis.
     %
     \[
         \mathrm{Jacobian} = \abs{J} = \abs{
@@ -232,7 +228,11 @@
 \end{landscape}
 \pagebreak
 
+\newgeometry{left=8mm,right=8mm,top=20mm,bottom=20mm}
+% \vspace*{\fill}
+
 \section{Vector Calculus}
+\vspace{-0.5cm}
 \begin{multicols}{2}
 
     \begin{align*}
@@ -289,6 +289,10 @@
         \iint_{S} \left(\grad \times \vec{F}\right) \cdot \vec{n} \deriv S
             &= \oint_{\partial S} \vec{F} \cdot \deriv \vec{r}
     \end{align*}
+    %
+    \[
+        \vec{F} \text{ conservative } \iff \grad \times \vec{F} = \vec{0} \; \left(\text{or \(\pfrac{F_1}{y} = \pfrac{F_2}{x}\)}\right) 
+    \]
 \end{multicols}
 
 \section{Miscellaneous}
@@ -318,7 +322,15 @@
     %
     \vfill\columnbreak
     %
-
+    The Gram-Schmidt process constructs an orthonormal basis \(\{\uvec{e}[1], \cdots, \uvec{e}[n]\}\) out of \(n\) linearly
+    independent \(\{\vec{v_1}, \cdots, \vec{v_n}\}\). First let \(\uvec{e}[1] = \frac{\vec{v_1}}{\norm{\vec{v_1}}}\).
+    Then, for each \(i = 1, \cdots, n\):
+    \begin{enumerate}
+        \item Let \(U_i = \spn \{\uvec{e}[1], \cdots, \uvec{e}[i]\}\).
+        \item Calculate \(\vec{w_{i+1}} = \vec{v_{i+1}} - \proj_{U_{i}} \left(\vec{v_{i+1}}\right)\).
+        \item Set \(\uvec{e}[i+1] = \frac{\vec{w_{i+1}}}{\norm{\vec{w_{i+1}}}}\) and increment \(i\) if required.
+    \end{enumerate}
+    %
     \(A \in M_{n \times n}(\mathbb{F})\) is diagonalisable (\(A = PDP^{-1}\))
     \begin{itemize}[leftmargin=1.0cm, labelsep=\interwordspace]
         \item[iff] \(A\) has \(n\) linearly independent eigenvectors
@@ -332,10 +344,17 @@
     \end{itemize}
 
     The complex inner product for \(\vec{u}, \vec{v} \in \mathbb{C}^n\) is defined by
-    \[\vec{u} \cdot \vec{v} = u_1 \bar v_1 + \cdots + u_n \bar v_n = \vec{v}^{*} \vec{u} \in \mathbb{C}\]
-    where \(\bar z\) is the conjugate of \(z\) and \(\vec{v}^{*}\) is the conjugate transpose of \(\vec{v}\). Now,
+    \[\inner{\vec{u}}{\vec{v}} = u_1 \bar v_1 + \cdots + u_n \bar v_n = \vec{v}^{*} \vec{u} \in \mathbb{C}\]
+    where \(\bar z\) is the conjugate of \(z\) and \(\vec{v}^{*}\) is the conjugate transpose of \(\vec{v}\). It satisfies
     \(\overline{\inner{\vec{u}}{\vec{v}}} = \inner{\vec{v}}{\vec{u}}\).
 
+    \begin{itemize}
+        \item Ellipse or circle: \(\frac{x^2}{k^2} + \frac{y^2}{l^2} = 1\) for \(k, l > 0\)
+        \item Hyperbola: \(\frac{x^2}{k^2} - \frac{y^2}{c^2}\) or \(\frac{y^2}{c^2} - \frac{x^2}{k^2}\) for \(k, l > 0\)
+        \item Parabola: \(x^2 = ky\) or \(y^2 = kx\) for \(k \neq 0\)
+    \end{itemize}
 \end{multicols}
+
+% \vspace*{\fill}
 
 \end{document}
