@@ -1,0 +1,292 @@
+% \documentclass[a4paper,landscape,columns=2]{cheatsheet}
+\documentclass[10pt, a4paper]{article}
+
+\usepackage{geometry}
+
+\input{mymathpreamble.tex}
+
+% giving this a try:
+% http://www.khirevich.com/latex/microtype/
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+
+\usepackage{pdflscape}
+
+\usepackage{multicol}
+\setlength{\columnsep}{0.8cm}
+
+\usepackage{wrapfig}
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titlespacing*{\section}{0pt}{2ex}{2ex}  % 4.3ex plus .2ex
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+\usepackage{tikzducks}
+
+\usepackage[style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\setcounter{secnumdepth}{0}  % get rid of section numbering - no need to use \section*
+
+% https://tex.stackexchange.com/a/390653
+\newlength{\interwordspace}
+\settowidth{\interwordspace}{\ }
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+% \setlength{\abovedisplayskip}{0pt}
+% \setlength{\belowdisplayskip}{0pt}
+% \setlength{\abovedisplayshortskip}{0pt}
+% \setlength{\belowdisplayshortskip}{0pt}
+
+\newgeometry{margin=8mm}
+
+\begin{landscape}
+\begin{multicols}{2}
+    \raggedcolumns
+
+    \section{Coupled ODEs}
+
+    \[\dot{\vec{y}} = \mat{A} \vec{y} + \vec{r}\]
+    %
+    \[
+        \ddot y + p(t) y + q(t) = r(t) \longrightarrow
+        \begin{pmatrix}
+            y \\
+            \dot y
+        \end{pmatrix}
+        = \dot{\vec{y}} = \begin{pmatrix}
+            0 & 1 \\
+            -q(t) & -p(t)
+        \end{pmatrix} \vec{y} + \begin{pmatrix}
+            0 \\
+            r(t)
+        \end{pmatrix}
+    \]
+
+    The eigenvalues of \(\mat{A}\) found by solving \(\det (\mat{A} - \lambda \mat{I}) = 0\)
+    gives the same characteristic equation for the uncoupled system. General solutions for
+    a second-order system with real constant coefficients, with
+    eigenvalues \(\lambda_1, \lambda_2\) and eigenvectors \(\vec{x_1}, \vec{x_2}\), are given by:
+    \begin{align*}
+        \lambda_1 \neq \lambda_2: \enspace
+            \vec{y} &= c_1 \vec{x_1} e^{\lambda_1 t} + c_2 \vec{x_2} e^{\lambda t} \\
+        \lambda_1, \lambda_2 \in \mathbb{C}: \enspace
+            \vec{y} &= c_1 \Re\left(\vec{x_1} e^{\lambda_1 t}\right) 
+                + c_2 \Im\left(\vec{x_1} e^{\lambda_1 t}\right) \\
+        \lambda_1 = \lambda_2: \enspace
+            \vec{y} &= c_1 \vec{x} e^{\lambda t} + c_2 (t \vec{x} + \vec{p}) e^{\lambda t},
+            \,\text{where}\, (\mat{A} - \lambda \mat{I}) \vec{p} = \vec{x}.
+    \end{align*}
+
+    \section{Phase Portraits of 2D Autonomous Systems}
+
+    Let \(\dot{\vec{y}} = \vec{f}(\vec{y})\) with \(\vec{y} \in \mathbb{R}^2\),
+    \(\vec{f}: \mathbb{R}^2 \to \mathbb{R}^2\), where \(\vec{f}\) does not depend on \(t\).
+    \(\vec{f}\) defines a direction field in
+    the \(y_1\)-\(y_2\) plane, and a trajectory of the system is a curve following the
+    field. \(\vec{f}\) being continuous with continuous partials implies existence and uniqueness
+    for these trajectories, so they do not cross. By the chain rule, the slope of a trajectory is
+    \[\oderiv{y_2}{y_1} = \frac{\dot y_2}{\dot y_1} = \frac{f_2}{f_1}.\]
+
+    A nullcline is a curve in phase space where the slope of the trajectory is either 0 or \(\infty\).
+    Set \(\dot y_2 = 0\) for horizontal nullclines and \(\dot y_1 = 0\) for vertical nullclines, and
+    solve for \(y_2\). Solving for the trajectories themselves is possible in specific cases,
+    usually when the ODE in \(y_2\) from the slope formula is separable.
+
+    For the lines in phase space in the direction of the eigenvectors (called eigendirections),
+    there are straight line solutions either flowing towards or away from the origin, determined
+    by the sign of the corresponding eigenvalue (\(-\) stable, \(+\) unstable).
+    
+    \(\lambda_1 \neq \lambda_2\) and both have the same sign:
+    \begin{itemize}
+        \item Negative \(\lambda\) gives a \emph{stable improper node}, where
+            trajectories curve like a parabola and approach the gendirection with smallest absolute value,
+            since that exponential term dominates at large \(t\).
+        \item Positive \(\lambda\) gives an
+            \emph{unstable improper node}, where trajectories approach eigendirection with
+            largest absolute value.
+    \end{itemize}
+
+    \(\lambda_1 > 0,\, \lambda_2 < 0\):
+    \begin{itemize}
+        \item This gives a \emph{saddle point}. Trajectories come in parallel to the
+            stable eigendirection then turn around and become parallel to the unstable direction.
+    \end{itemize}
+    %
+    \vfill\columnbreak
+    %
+    \(\lambda_1 = \lambda_2\):
+    \begin{itemize}
+        \item If there are 2 linearly independent eigenvectors (eigenspace of \(\lambda\) has dimension 2),
+            all trajectories travel in straight lines either towards or away from the origin, called
+            a \emph{proper node}. For a 2D system, this is only possible if \(\mat{A}\) is some multiple of
+            the identity matrix, i.e. \(\mat{A} = k \mat{I}\) for \(k \in \mathbb{R}\).
+        \item If there is only 1 eigenvector, trajectories come tangent to the eigendirection near the origin
+            and do a U-turn away, called a \emph{degenerate node}.
+    \end{itemize}
+
+    \(\lambda = \alpha \pm \beta i\):
+    \begin{itemize}
+        \item If \(\alpha = 0\), trajectories are ellipses around the origin, and the origin
+            is called a \emph{centre}. To determine the direction of flow, consider the sign of \(\dot y_1\)
+            at a point in the positive quadrant.
+        \item If \(\alpha \neq 0\), trajectories trace out a logarithmic spiral \(r(t) = e^{\alpha t}\)
+            shown by converting to polar coordinates. This is called a \emph{spiral}.
+            Plotting nullclines helps with sketching trajectories.
+    \end{itemize}
+
+    The following stability chart allows for the system to be classified given values of
+    \(\tr \mat{A}\) and \(\det \mat{A}\) \cite{StabilityDiagram}. The discriminant
+    \(\Delta\) is defined as \(\Delta = (\tr \mat{A})^2 - 4 \det \mat{A}\).
+
+    {%
+        \centering
+        \includegraphics[width=\columnwidth]{images/stabilityDiagram.png}
+    }%
+
+    \begin{tcolorbox}[colframe=red!75!black, arc=0pt, outer arc=0pt, center, hbox]
+        ducky's MATH2100 summary --- \today
+    \end{tcolorbox}
+
+\end{multicols}
+
+\pagebreak
+
+\begin{multicols*}{2}
+    \section{Non-Linear or Inhomogeneous Systems}
+
+    A system \(\dot{\vec{y}} = \vec{f}(\vec{y})\) has a critical point at \(\vec{y^*}\) if
+    \(\vec{f}(\vec{y^*}) = \vec{0}\). Non-linear systems may have more than 1 critical point,
+    but linear \(\dot{\vec{y}} = \mat{A}\vec{y}\) always has one at \(\vec{0}\), and this
+    is the only critical point unless \(\det \mat{A} = 0\).
+
+    An inhomogeneous linear system \(\dot{\vec{y}} = \mat{A}\vec{y} + \vec{p}\) is a linear
+    translation away from a homogeneous system. Shifting the (unique) critical point at \(\vec{p}\) to
+    \(\vec{0}\) via the change of variables \(\vec{x} = \vec{y} - \vec{p}\) gives the homogeneous
+    \(\dot{\vec{x}} = \mat{A} \vec{x}\), so the previous techniques are applicable.
+    
+    For a nonlinear system \(\dot{\vec{y}} = \vec{f}(\vec{y})\), the nature of the system around the
+    critical point is approximated via the Jacobian matrix \(\mat{D}\vec{f}\). 
+    The stability diagram can be used to classify these critical points by evaluating \(\mat{D}\vec{f}\)
+    at each \(\vec{y^*}\). The linearised system near \(\vec{y^*}\) is then
+    \[
+        \dot{\vec{y}} = \mat{D}\vec{f} |_{\vec{y^{*}}} (\vec{y} - \vec{y^*}),
+        \quad
+        \mat{D}\vec{f} = \begin{pmatrix}
+            \pderiv{f_1}{y_1} & \pderiv{f_1}{y_2} \\
+            \pderiv{f_2}{y_1} & \pderiv{f_2}{y_2}
+        \end{pmatrix}.
+    \]
+    %
+    \section{Special Functions}
+
+    The Dirac Delta function \(\delta(t)\) is an ``impulse'' with infinite value at \(t = 0\) and
+    zero value everywhere else. It satisfies \(\int_0^{\infty} \delta(t) = 1\). An impulse applied
+    at \(t = a\) is represented by \(\delta(t - a)\).
+
+    The unit step function \(u(t)\) is defined by
+    \[
+        u(t) = \begin{cases}
+            0, & t < 0 \\
+            1, & t \geq 0.
+        \end{cases}  
+    \]
+    Many piecewise-continuous functions can be written in terms of \(u\). As described in \cite{LaplacePractice},
+    if \(f(t)\) changes from \(g_1(t)\) to \(g_2(t)\) at \(t = c\), add a \(u(t-c) (g_2(t) - g_1(t))\) term
+    to the unit step representation of \(f\).
+
+    The Gamma function is defined as
+    \[
+        \Gamma(z) = \int_0^{\infty} e^{-x} x^{z-1} \,\deriv x,
+    \]
+    which generalises the factorial: \(\Gamma(n + 1) = n!\) for \(n \in \mathbb{N}\).
+
+    Although there are a few estabilished conventions, the error function as defined in MATH2100 is given by
+    \[
+        \erf(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-u^2} \,\deriv u.
+    \]
+    It is odd and monotone increasing. The following formulas may help when doing computation with \(\erf\):
+    \[
+        \int_0^{\infty} e^{-u^2} \,\deriv u = \int_{-\infty}^{0} e^{-u^2} \,\deriv u
+        = \frac{\sqrt{\pi}}{2},
+        \quad
+        \frac{1}{\sqrt{\pi}} \int_a^b e^{-u^2} \,\deriv u
+        = \erf(b) - \erf(a).
+    \]
+
+    For the heat equation with parameter \(c\), the Gaussian function \(G(x, t)\) is defined as
+    \[
+        G(x, t) = \frac{1}{\sqrt{4 \pi c^2 t}} \exp \left(
+            \frac{-x^2}{4c^2 t}
+        \right).
+    \]
+    A few properties are \(\int_{-\infty}^{\infty} G(x, t) \,\deriv x = 1\) for \(t > 0\),
+    \(\lim_{t \to 0^+} G(x, t) = 0\) for \(x \neq 0\) and
+    \(\lim_{t \to 0^+} G(0, t) = +\infty\).
+
+    \section{Laplace Transforms}
+
+    The following formulas are given in the formula sheet for the exam, but have been
+    added here for completeness.
+    \[
+        \laplace\{f(t)\} = F(s) = \int_0^{\infty} f(t) e^{-st} \,\deriv t
+    \]
+
+    {
+    \everymath{\displaystyle}
+    \begin{center}
+    \begin{tabular}{cc@{\hskip 1cm}cc}
+        \toprule
+        \(f(x)\) & \(F(s)\) & \(f(x)\) & \(F(s)\) \\
+        \midrule
+        \(t^n\) & \(\frac{n!}{s^{n+1}}\) & \(t^a\) & \(\frac{\Gamma(a+1)}{s^{a+1}}\) \\
+        \(\cos \alpha t\) & \(\frac{s}{s^2 + \alpha^2}\) & \(\sin \alpha t\) & \(\frac{\alpha}{s^2 + \alpha^2}\) \\
+        
+    \end{tabular}
+    \end{center}
+    }
+
+    The following formulas are not included in the formula sheet, but may be helpful to know.
+    \begin{align*}
+        \laplace^{-1} \left\{\frac{s}{(s^2 + \alpha^2)^2}\right\} &= \frac{1}{2\alpha} t \sin \alpha t \\
+        \laplace \{f(t) u(t-k)\} &= e^{-ks} \laplace\{f(t+k)\}.
+    \end{align*}
+
+\end{multicols*}
+\end{landscape}
+
+\pagebreak
+
+\newgeometry{left=8mm,right=8mm,top=20mm,bottom=17mm}
+% \vspace*{\fill}
+\onecolumn
+
+\section{Differential Operators and Change of Variables}
+\vspace{-0.5cm}
+\begin{multicols}{2}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[scale=0.3]
+        \duck[graduate=gray!20!black,
+            tassel=red!70!black]
+    \end{tikzpicture} 
+\end{figure}
+
+\end{multicols}
+
+\printbibliography
+
+% \vspace*{\fill}
+\end{document}
