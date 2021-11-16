@@ -49,7 +49,7 @@
 % \setlength{\abovedisplayshortskip}{0pt}
 % \setlength{\belowdisplayshortskip}{0pt}
 
-\newgeometry{margin=8mm}
+\newgeometry{margin=10mm}
 
 \begin{landscape}
 \begin{multicols}{2}
@@ -163,18 +163,17 @@
 
 \pagebreak
 
-\begin{multicols*}{2}
+\begin{multicols}{2}
     \section{Non-Linear or Inhomogeneous Systems}
 
     A system \(\dot{\vec{y}} = \vec{f}(\vec{y})\) has a critical point at \(\vec{y^*}\) if
-    \(\vec{f}(\vec{y^*}) = \vec{0}\). Non-linear systems may have more than 1 critical point,
-    but linear \(\dot{\vec{y}} = \mat{A}\vec{y}\) always has one at \(\vec{0}\), and this
-    is the only critical point unless \(\det \mat{A} = 0\).
-
+    \(\vec{f}(\vec{y^*}) = \vec{0}\). Linear systems always have one at \(\vec{0}\), and only one
+    unless \(\det \mat{A} = 0\).
+    %
     An inhomogeneous linear system \(\dot{\vec{y}} = \mat{A}\vec{y} + \vec{p}\) is a linear
-    translation away from a homogeneous system. Shifting the (unique) critical point at \(\vec{p}\) to
+    translation away from a homogeneous system. Shifting the critical point at \(\vec{p}\) to
     \(\vec{0}\) via the change of variables \(\vec{x} = \vec{y} - \vec{p}\) gives the homogeneous
-    \(\dot{\vec{x}} = \mat{A} \vec{x}\), so the previous techniques are applicable.
+    \(\dot{\vec{x}} = \mat{A} \vec{x}\), so techniques discussed earlier are applicable.
     
     For a nonlinear system \(\dot{\vec{y}} = \vec{f}(\vec{y})\), the nature of the system around the
     critical point is approximated via the Jacobian matrix \(\mat{D}\vec{f}\). 
@@ -191,32 +190,32 @@
     %
     \section{Special Functions}
 
-    The Dirac Delta function \(\delta(t)\) is an ``impulse'' with infinite value at \(t = 0\) and
-    zero value everywhere else. It satisfies \(\int_0^{\infty} \delta(t) = 1\). An impulse applied
-    at \(t = a\) is represented by \(\delta(t - a)\).
+    The \emph{Dirac Delta function} \(\delta(t)\) is an ``impulse'' with infinite value at \(t = 0\) and
+    zero value everywhere else, satisfying \(\int_0^{\infty} \delta(t) = 1\). \(\delta(t - a)\)
+    represents an impulse at \(t = a\).
 
-    The unit step function \(u(t)\) is defined by
+    The \emph{unit step function} \(u(t)\) is defined by
     \[
         u(t) = \begin{cases}
             0, & t < 0 \\
             1, & t \geq 0.
         \end{cases}  
     \]
-    Many piecewise-continuous functions can be written in terms of \(u\). As described in \cite{LaplacePractice},
+    To write a piecewise-continuous function in terms of \(u\),
     if \(f(t)\) changes from \(g_1(t)\) to \(g_2(t)\) at \(t = c\), add a \(u(t-c) (g_2(t) - g_1(t))\) term
-    to the unit step representation of \(f\).
+    to the new expression of \(f\) \cite{LaplacePractice}.
 
-    The Gamma function is defined as
+    The \emph{Gamma function} \(\Gamma(z)\) generalises the factorial by
+    \(\Gamma(n + 1) = n!\) for \(n \in \mathbb{N}\), and is defined for all positive \(z\) by
     \[
         \Gamma(z) = \int_0^{\infty} e^{-x} x^{z-1} \,\deriv x,
     \]
-    which generalises the factorial: \(\Gamma(n + 1) = n!\) for \(n \in \mathbb{N}\).
 
-    Although there are a few estabilished conventions, the error function as defined in MATH2100 is given by
+    In this course the \emph{error function} is defined as
     \[
         \erf(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-u^2} \,\deriv u.
     \]
-    It is odd and monotone increasing. The following formulas may help when doing computation with \(\erf\):
+    It is odd and monotone increasing. The following formulas may be useful for computation:
     \[
         \int_0^{\infty} e^{-u^2} \,\deriv u = \int_{-\infty}^{0} e^{-u^2} \,\deriv u
         = \frac{\sqrt{\pi}}{2},
@@ -225,13 +224,13 @@
         = \erf(b) - \erf(a).
     \]
 
-    For the heat equation with parameter \(c\), the Gaussian function \(G(x, t)\) is defined as
+    For the heat equation with parameter \(c\), the \emph{Gaussian function} \(G(x, t)\) is defined as
     \[
         G(x, t) = \frac{1}{\sqrt{4 \pi c^2 t}} \exp \left(
             \frac{-x^2}{4c^2 t}
         \right).
     \]
-    A few properties are \(\int_{-\infty}^{\infty} G(x, t) \,\deriv x = 1\) for \(t > 0\),
+    \(\int_{-\infty}^{\infty} G(x, t) \,\deriv x = 1\) for \(t > 0\),
     \(\lim_{t \to 0^+} G(x, t) = 0\) for \(x \neq 0\) and
     \(\lim_{t \to 0^+} G(0, t) = +\infty\).
 
@@ -245,36 +244,147 @@
 
     {
     \everymath{\displaystyle}
+    % \renewcommand{\arraystretch}{2}
     \begin{center}
     \begin{tabular}{cc@{\hskip 1cm}cc}
         \toprule
-        \(f(x)\) & \(F(s)\) & \(f(x)\) & \(F(s)\) \\
-        \midrule
-        \(t^n\) & \(\frac{n!}{s^{n+1}}\) & \(t^a\) & \(\frac{\Gamma(a+1)}{s^{a+1}}\) \\
-        \(\cos \alpha t\) & \(\frac{s}{s^2 + \alpha^2}\) & \(\sin \alpha t\) & \(\frac{\alpha}{s^2 + \alpha^2}\) \\
-        
+        \(f(t)\) & \(F(s)\) & \(f(t)\) & \(F(s)\) \\
+        \midrule \\[-10pt]
+        \(c\) & \(\frac{c}{s}\) & \(a g(t) + b h(t)\) & \(a G(s) + b H(s)\) \\[10pt]
+        \(t^{n}\) & \(\frac{n!}{s^{n+1}}\) & \(e^{at} f(t)\) & \(F(s-a)\) \\[10pt]
+        \(t^{a}\) & \(\frac{\Gamma(a+1)}{s^{a+1}}\) & \(f(t-k)u(t-k)\) & \(e^{-ks} F(s)\) \\[10pt]
+        \(\cos \alpha t\) & \(\frac{s}{s^{2} + \alpha^{2}}\) & \(f'(t)\) & \(s F(s) - f(0)\) \\[10pt]
+        \(\sin \alpha t\) & \(\frac{\alpha}{s^{2} + \alpha^{2}}\) & \(f''(t)\) & \(s^{2} F(s) - sf(0) - f'(0)\) \\[10pt]
+        \(\delta(t - k)\) & \(e^{-ks}\) & \(t f(t)\) & \(-F'(s)\) \\[1pt]
+        \bottomrule
     \end{tabular}
     \end{center}
     }
 
+    The convolution theorem states that:
+    \[
+        \laplace^{-1} \left\{F(s) G(s)\right\}
+        = \int_0^t f(\tau) g(t - \tau) \,\deriv \tau
+        = (f * g)(t).
+    \]
+    If \(f(t)\) has period \(p\), then the Laplace integral can be simplified:
+    \[
+        \laplace\{f(t)\}
+        = \frac{1}{1 - e^{-sp}} \int_0^p f(t) e^{-st} \,\deriv t.
+    \]
+    %
     The following formulas are not included in the formula sheet, but may be helpful to know.
     \begin{align*}
         \laplace^{-1} \left\{\frac{s}{(s^2 + \alpha^2)^2}\right\} &= \frac{1}{2\alpha} t \sin \alpha t \\
-        \laplace \{f(t) u(t-k)\} &= e^{-ks} \laplace\{f(t+k)\}.
+        \laplace \{f(t) u(t-k)\} &= e^{-ks} \laplace\{f(t+k)\} \tag*{\cite{LaplacePractice}} \\
+        \laplace \{f^{(n)}(t)\} &= s^n F(s) - \sum_{k=1}^n s^{n-k} f^{(k-1)}(0) \\
+        \laplace \{t^n f(t)\} &= (-1)^n F^{(n)}(s).
     \end{align*}
 
-\end{multicols*}
-\end{landscape}
+\end{multicols}
+
 
 \pagebreak
 
-\newgeometry{left=8mm,right=8mm,top=20mm,bottom=17mm}
+% \newgeometry{left=10mm,right=10mm,top=15mm,bottom=15mm}
 % \vspace*{\fill}
-\onecolumn
+% \onecolumn
 
-\section{Differential Operators and Change of Variables}
-\vspace{-0.5cm}
-\begin{multicols}{2}
+% \vspace{-0.5cm}
+\begin{multicols*}{2}
+    \section{Differential Operators and Change of Variables}
+
+    A homogeneous linear differential equation has the form \(L(u) = 0\) where \(L\) is a
+    \emph{linear differential operator} satisfying \(L(u+v) = L(u) + L(v)\) and
+    \(L(cu) = c L(u)\) for \(c \in \mathbb{R}\) and functions \(u, v\). This can be used
+    to verify a DE is linear using the linearity of the derivative. A common differential operator
+    is the del operator \(\grad\), defined in 3 dimensions by
+    \(\grad = (\pderiv{}{x}, \pderiv{}{y}, \pderiv{}{z})\). It can be applied to a scalar field
+    \(f\) to get \(f\)'s gradient field, or be dotted or crossed with a vector field \(\vec{v}\)
+    to get its \emph{divergence} or \emph{curl}:
+    \begin{gather*}
+        \operatorname{grad} f = \grad f = \left(\pderiv{f}{x}, \pderiv{f}{y}, \pderiv{f}{z}\right),
+        \qquad
+        \div \vec{v} = \grad \cdot \vec{v} = \pfrac{v_1}{x} + \pfrac{v_2}{y} + \pfrac{v_3}{z}, \\
+        \curl \vec{v} = \grad \times \vec{v} = 
+        \begin{vmatrix}
+            \uvec{i} & \uvec{j} & \uvec{k} \\
+            \pfrac{}{x} & \pfrac{}{y} & \pfrac{}{z} \\
+            v_1 & v_2 & v_3
+        \end{vmatrix}.
+    \end{gather*}
+    Additionally, the \emph{Laplacian} is defined as \(\grad^2 = \grad \cdot \grad\). For scalar fields,
+    \[
+        \grad^2 f = \grad \cdot \grad f = \pderiv[2]{f}{x} + \pderiv[2]{f}{y} + \pderiv[2]{f}{z},
+    \]
+    and for a vector field \(\vec{v}\) in cartesian coordinates, the Laplacian is just defined
+    elementwise, so \(\grad^2 \vec{v} = (\grad^2 v_1, \grad^2 v_2, \grad^2 v_3)\).
+    Equivalently, it can be defined as
+    \[
+        \grad^2 \vec{v} = \grad(\grad \cdot \vec{v}) - \grad \times (\grad \times \vec{v}).
+    \]
+    The above formulas only apply for \emph{cartesian coordinates}; other coordinate systems have
+    different expressions. Importantly, the Laplacian in polar coordinates is given by
+    \[
+        \grad^2 = \frac{1}{r} \pderiv{}{r} \left(r \pderiv{}{r}\right) + \frac{1}{r^2} \pderiv[2]{}{\theta}.
+    \]
+    Changing variables that a PDE is expressed in may simplify the equation and give different
+    types of solutions not apparent from the initial coordinate system.
+    The goal is to express derivatives in the \emph{initial} coordinates in terms of
+    derivatives in the \emph{new} coordinates. If \(f(x, y)\) is changed to \(f(u, v)\) via
+    \(u(x, y)\) and \(v(x, y)\), then by the chain rule,
+    \begin{align*}
+        \pderiv{f}{x} &= \pderiv{f}{u} \pderiv{u}{x} + \pderiv{f}{v} \pderiv{v}{x}, \\
+        \pderiv{f}{y} &= \pderiv{f}{u} \pderiv{u}{y} + \pderiv{f}{v} \pderiv{v}{y}.
+    \end{align*}
+    Note that \(f\) can be removed from the above equations to get a relationship purely involving
+    the differential operators \(\pderiv{}{x}, \pderiv{}{y}, \pderiv{}{u}\) and \(\pderiv{}{v}\).
+    This can then be substituted into the original PDE to get a new equation.
+
+    An example is with the PDE \(u_t + c u_x = 0\) for \(u(x, t)\). Changing variables to
+    \(x' = x - ct\) and \(t' = t\) allows the equation to be written as \(u_{t'} = 0\), thus
+    \(u(x', t') = f(x')\) and \(u(x, t) = f(x-ct)\) for differentiable \(f\). The solution is
+    defined on a plane in \(x\)-\(t\) space.
+    
+    \section{Fourier Series}
+
+    If a function \(f(x)\) has period \(2L\), i.e. \(f(x + 2L) = f(x)\) for all \(x\), then
+    it can be written as a \emph{Fourier series}:
+    \[
+        f(x)
+        = a_0 + \sum_{n=1}^{\infty} \left(
+            a_n \cos\left(\frac{n \pi x}{L}\right)
+            + b_n \sin\left(\frac{n \pi x}{L}\right)
+        \right),
+    \]
+    with Fourier coefficients given by
+    \begin{gather*}
+        a_n = \frac{1}{L} \int_{-L}^{L} f(x) \cos\left(\frac{n \pi x}{L}\right) \,\deriv x,
+        \quad
+        b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin\left(\frac{n \pi x}{L}\right) \,\deriv x, \\
+        a_0 = \frac{1}{2L} \int_{-L}^{L} f(x) \,\deriv x.
+    \end{gather*}
+    In the case that \(f\) is \emph{even} (\(f(-x) = f(x)\)) or \emph{odd} (\(f(-x) = -f(x)\)), the formulas for
+    the coefficients can be simplified, only changing the fraction and integral bounds:
+    \[
+        a_0 = \frac{1}{L} \int_0^L \left(\,\cdots\right) \,\deriv x,
+        \quad
+        a_n = \frac{2}{L} \int_0^L \left(\,\cdots\right) \,\deriv x,
+        \quad
+        b_n = \frac{2}{L} \int_0^L \left(\,\cdots\right) \,\deriv x.
+    \]
+    Odd \(f\) makes \(a_n = 0\) for all \(n\), and even \(f\) makes \(b_n = 0\) for all \(n\).
+
+    These simplified formulas can also be used when extending \(f\) only defined on \([0, L]\) to be
+    odd or even periodic over period \(2L\). This is called a \emph{half-range expansion} of \(f\);
+    odd periodic extension makes \(a_n = 0\) and even period extension makes \(b_n = 0\) for all \(n\).
+
+    
+    
+\end{multicols*}
+\end{landscape}
+
+\printbibliography
 
 \begin{figure}[b]
     \centering
@@ -283,10 +393,6 @@
             tassel=red!70!black]
     \end{tikzpicture} 
 \end{figure}
-
-\end{multicols}
-
-\printbibliography
 
 % \vspace*{\fill}
 \end{document}
