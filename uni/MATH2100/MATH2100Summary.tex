@@ -291,7 +291,7 @@
 % \onecolumn
 
 % \vspace{-0.5cm}
-\begin{multicols*}{2}
+\begin{multicols}{2}
     \section{Differential Operators and Change of Variables}
 
     A homogeneous linear differential equation has the form \(L(u) = 0\) where \(L\) is a
@@ -379,9 +379,37 @@
     odd or even periodic over period \(2L\). This is called a \emph{half-range expansion} of \(f\);
     odd periodic extension makes \(a_n = 0\) and even period extension makes \(b_n = 0\) for all \(n\).
 
+    If \(f\) has period \(2L\) and is piecewise continuous within that period, then its Fourier series converges
+    to \(\frac{1}{2}(f(x^{+}) + f(x^{-}))\) at every \(x\) where \(f\) has left and right derivatives.
+
+    To derive formulas for the coefficients, define functions \(f_1\) and \(f_2\) to be orthogonal
+    if \(\int_{-L}^{L} f_1(x) f_2(x) \,\deriv x = 0\). It can be shown that all functions
+    \(\left\{1, \cos\left(\frac{n \pi x}{L}\right), \sin\left(\frac{n \pi x}{L}\right)\right\}\)
+    are mutually orthogonal by integration and sum/difference identities.
+    Both sides of the Fourier Series equation can then be integrated and solved for
+    the coefficients, where orthogonal terms vanish. Note that ``orthogonal'' is in the context
+    of inner product spaces, discussed further in MATH2001.
+
+    \section{Important PDEs}
+
+    {
+    \everymath{\displaystyle}
+    \begin{center}
+    \begin{tabular}{cccc}
+        \toprule
+        Name & 1D & 2D & General \\
+        \midrule
+        Heat Equation & \(u_t = c^2 u_{xx}\) & \(u_{t} = c^2 (u_{xx} + u_{yy})\) & \(u_{t} = c^2 \grad^2 u\) \\
+        Wave Equation & \(u_{tt} = c^2 u_{xx}\) & \(u_{tt} = c^2 (u_{xx} + u_{yy})\) & \(u_{tt} = c^2 \grad^2 u\) \\
+        Laplace's Equation & \(u_{xx} = 0\) & \(u_{xx} + u_{yy} = 0\) & \(\grad^2 u = 0\) \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    }
     
-    
-\end{multicols*}
+    The rest of the course only considers these equations in detail.
+
+\end{multicols}
 \end{landscape}
 
 \printbibliography
