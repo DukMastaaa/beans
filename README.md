@@ -6,6 +6,7 @@ notes for various subjects from school/uni
 - CSSE2010 Introduction to Computer Systems
 - MECH2300 Structures and Materials (revision notes)
 - MATH2001 Calculus & Linear Algebra II (cheat sheet)
+- MATH2100 Applied Mathematical Analysis (course summary)
 
 ## School Subjects
 - Maths B
