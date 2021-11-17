@@ -1,5 +1,10 @@
-**.log
-**.aux
-**.fls
-**.fdb_latexmk
-**.synctex.gz
+**/output/*.log
+**/output/*.aux
+**/output/*.fls
+**/output/*.fdb_latexmk
+**/output/*.synctex.gz
+**/output/*.bbl
+**/output/*.bcf
+**/output/*.blg
+**/output/*.out
+**/output/*.run.xml
