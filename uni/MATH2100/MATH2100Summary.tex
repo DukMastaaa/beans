@@ -378,17 +378,30 @@
     These simplified formulas can also be used when extending \(f\) only defined on \([0, L]\) to be
     odd or even periodic over period \(2L\). This is called a \emph{half-range expansion} of \(f\);
     odd periodic extension makes \(a_n = 0\) and even period extension makes \(b_n = 0\) for all \(n\).
-
+    
+    The following identities may be useful for computation.
+    %
+    \begin{align*}
+        2 \sin A \sin B &= \cos(A - B) - \cos(A + B) \\
+        2 \cos A \cos B &= \cos(A - B) + \cos(A + B) \\
+        2 \sin A \cos B &= \sin(A - B) + \sin(A + B)
+    \end{align*}
+    %
     If \(f\) has period \(2L\) and is piecewise continuous within that period, then its Fourier series converges
     to \(\frac{1}{2}(f(x^{+}) + f(x^{-}))\) at every \(x\) where \(f\) has left and right derivatives.
 
     To derive formulas for the coefficients, define functions \(f_1\) and \(f_2\) to be orthogonal
     if \(\int_{-L}^{L} f_1(x) f_2(x) \,\deriv x = 0\). It can be shown that all functions
     \(\left\{1, \cos\left(\frac{n \pi x}{L}\right), \sin\left(\frac{n \pi x}{L}\right)\right\}\)
-    are mutually orthogonal by integration and sum/difference identities.
+    are mutually orthogonal by integration by parts.
     Both sides of the Fourier Series equation can then be integrated and solved for
-    the coefficients, where orthogonal terms vanish. Note that ``orthogonal'' is in the context
-    of inner product spaces, discussed further in MATH2001.
+    the coefficients, where orthogonal terms vanish. This orthogonality is further discussed in MATH2001.
+
+\end{multicols}
+
+\pagebreak
+
+\begin{multicols*}{2}
 
     \section{Important PDEs}
 
@@ -399,17 +412,78 @@
         \toprule
         Name & 1D & 2D & General \\
         \midrule
-        Heat Equation & \(u_t = c^2 u_{xx}\) & \(u_{t} = c^2 (u_{xx} + u_{yy})\) & \(u_{t} = c^2 \grad^2 u\) \\
         Wave Equation & \(u_{tt} = c^2 u_{xx}\) & \(u_{tt} = c^2 (u_{xx} + u_{yy})\) & \(u_{tt} = c^2 \grad^2 u\) \\
+        Heat Equation & \(u_t = c^2 u_{xx}\) & \(u_{t} = c^2 (u_{xx} + u_{yy})\) & \(u_{t} = c^2 \grad^2 u\) \\
         Laplace's Equation & \(u_{xx} = 0\) & \(u_{xx} + u_{yy} = 0\) & \(\grad^2 u = 0\) \\
         \bottomrule
     \end{tabular}
     \end{center}
     }
-    
-    The rest of the course only considers these equations in detail.
 
-\end{multicols}
+    These equations are all linear and homogeneous.
+
+    \section{1D Wave, Infinite Domain}
+
+    The general solution to the 1D wave equation \(u_{tt} = c^2 u_{xx}\) can be found with the change of
+    variables \(v = x + ct\) and \(w = x - ct\), giving \(u{tt} - c^2 u_{xx} = u_{vw} = 0\).
+    This results in \(u(x, t) = F(x + ct) + G(x - ct)\) for arbitrary twice-differentiable \(F, G\).
+
+    From here, consider an infinite string with \(u(x, 0) = f(x)\) as initial deflection
+    and \(u_t(x, 0) = g(x)\) as initial velocity profile. From the general solution derived earlier,
+    taking derivatives gives \(u_t = c F'(x+ct) - c G'(x - ct)\) where the prime denotes a derivative with
+    respect to the entire argument. After substituting initial conditions and solving for \(F\) and \(G\),
+    the \emph{D'Alembert's solution} to the IVP is
+    \[
+        u(x, t) = \frac{1}{2}\left(f(x + ct) + f(x - ct) \right)
+        + \frac{1}{2C} \int_{x - ct}^{x + ct} g(s) \,\deriv s.
+    \]
+
+    A \emph{plucked} string is modelled with \(g(x) = 0\) and \(f(x)\) arbitrary.
+    A \emph{struck} string is modelled with \(f(x) = 0\) and \(g(x) = A e^{-x^2}\) for \(A \in \mathbb{R}\).
+    The resulting integral can be written in terms of the error function,
+    \[
+        u(x, t) = B \erf(x + ct) - B \erf(x - ct),
+        \quad
+        B = \frac{A \sqrt{\pi}}{4c}.
+    \]
+
+    \section{1D Wave, Finite Domain}
+
+    A finite string is modelled with \(u_{tt} - c^2 u_{xx} = 0\) on \(x \in [0, L]\) for \(t \geq 0\),
+    and again has initial deflection \(u(x, 0) = f(x)\) and initial velocity profile \(u_t(x, 0) = g(x)\).
+    Boundary conditions are \(u(0, t) = u(L, t) = 0\).
+
+    By Fourier's method (discussed in a later section), the non-trivial solution to this IVP is
+    \begin{align*}
+        u(x, t) &= \sum_{n=1}^{\infty} \left(
+            A_n \cos\left(\frac{n \pi c t}{L}\right) + B_n \sin\left(\frac{n \pi ct}{L}\right)
+        \right) \sin \left(\frac{n \pi x}{L}\right) \\
+        A_n &= \frac{2}{L} \int_0^L \sin\left(\frac{n \pi x}{L}\right) f(x) \,\deriv x \\
+        B_n &= \frac{2}{n \pi c} \int_0^L \sin\left(\frac{n \pi x}{L}\right) g(x) \deriv x.
+    \end{align*}
+    Note that \(A_n\) are just the coefficients of the half-range \(\sin\) series of \(f\).
+
+    \section{1D Heat, Finite Domain}
+
+    Consider the 1D heat equation \(u_t = c^2 u_{xx}\) on \(x \in [0, L]\) for \(t \geq 0\),
+    with ICs \(u(x, 0) = f(x)\) and BCs \(u_x(0, t) = u_x(L, t) = 0\), indicating that the endpoints
+    are insulated. Again using Fourier's method, one possible solution is given by
+    \(u(x, t) = A_0 \in \mathbb{R}\). A non-constant solution is given by
+    \begin{align*}
+        u(x, t) &= \sum_{n=0}^{\infty} A_n e^{-\left(\frac{n \pi c}{L}\right)^2 t} \cos\left(\frac{n \pi x}{L}\right) \\
+        A_0 &= \frac{1}{L} \int_0^L f(x) \,\deriv x \\
+        A_n &= \frac{2}{L} \int_0^L f(x) \cos\left(\frac{n \pi x}{L}\right) \,\deriv x.
+    \end{align*}
+    Note that \(A_n\) are just the coefficients of the half-range \(\cos\) series of \(f\).
+    There is an \(\exp\) term in the series instead of \(\sin\) and \(\cos\) due to
+    the first derivative \(u_t\) in the PDE.
+
+    \section{1D Heat, Infinite Domain}
+
+    stuff to write here
+
+\end{multicols*}
+
 \end{landscape}
 
 \printbibliography
