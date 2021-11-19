@@ -480,7 +480,77 @@
 
     \section{1D Heat, Infinite Domain}
 
-    stuff to write here
+    For \(u_t = c^2 u_{xx} = 0\) on \(x \in \mathbb{R}\) for \(t \geq 0\), with IC
+    \(u(x, 0) = f(x)\) and no boundary conditions, the Fourier method will not be useful. Instead,
+    the Gaussian function \(G(x, t)\) is a special solution to the equation, and so is \(G(x - y, t)\)
+    with \(y \in \mathbb{R}\) as a parameter. It represents an injection of 1 unit of heat energy
+    at \(x = y, t = 0\). Due to the superposition principle, the following formula can be verified
+    as the solution to the IVP:
+    \[
+        u(x, t)
+        = \int_{-\infty}^{\infty} G(x - y, t) f(y) \,\deriv y
+        = \frac{1}{\sqrt{4 \pi c^2 t}} \int_{-\infty}^{\infty} \exp\left(-\frac{(x-y)^2}{4c^2 t}\right) f(y) \,\deriv y.
+    \]
+    This is verified by distributing partial derivatives into the integral, and taing the limit as \(t \to 0\)
+    to show the initial condition holds.
+
+    \section{1D Heat, Positive Domain}
+
+    For \(u_t = c^2 u_{xx}\) on \(x, t \geq 0\), with IC \(u(x, 0) = F(x)\) for \(x \geq 0\) and BC
+    \(u(0, t) = 0\), this is converted into a problem over all of \(\mathbb{R}\) considering
+    values \(x < 0\) to be \emph{unphysical} via symmetry. Define an odd extension of \(F\):
+    \[
+        f(x) = \begin{cases}
+            F(x), & x \geq 0 \\
+            -F(-x), & x < 0.
+        \end{cases}
+    \]
+    The solution to the infinite domain problem with \(u(x, 0) = f(x)\) on \(\mathbb{R}\) is a solution to the
+    original problem for \(x \geq 0\). The BC is satisfied since \(f\) odd \(\implies f(0) = 0\).
+    Using such symmetric extensions is called the \emph{method of images}.
+    The solution given above for the infinite case can be simplified to the following formula:
+    \[
+        u(x, t) = \int_0^{\infty} \left[G(x-y, t) - G(x+y, t)\right] F(y) \,\deriv y.
+    \]
+
+\end{multicols*}
+
+\pagebreak
+
+\begin{multicols*}{2}
+
+    \section{1D Heat, Positive Domain (cont.)}
+
+    For the case that an \emph{insulation condition} \(u_x(0, t) = 0\) is given instead of \(u(0, t) = 0\),
+    extend \(F\) with even symmetry:
+    \[
+        f(x) = \begin{cases}
+            F(x), & x \geq 0 \\
+            F(-x), & x < 0.
+        \end{cases}
+    \]
+    By a similar derivation as before, the solution is given by
+    \[
+        u(x, t) = \int_0^{\infty} \left[G(x-y, t) + G(x+y, t)\right] F(y) \,\deriv y.
+    \]
+    Note the \(+\) instead of \(-\) in the square brackets.
+
+    For a non-zero boundary condition \(u(0, t) = u_0 \neq 0\), the problem can be modified
+    to have the solution \(\hat u(x, t) = u(x, t) - u_0\), which also satisfies \(\hat u_t = c^2 \hat u_{xx}\)
+    and has BC \(\hat u(0, t) = u(0, t) - u_0 = 0\), so the previous formulas can be used to obtain \(\hat u(x, t)\)
+    using
+    \[
+        \hat F(x) = F(x) - u_0.
+    \]
+    This can then be transformed back to the original problem by adding \(u_0\) to \(\hat u(x, t)\).
+
+    \section{1D Heat, Finite, Sinusoidal BC}
+
+    uhh
+
+    \section{1D Heat, Finite, Inhomogeneous, General Case}
+
+    If there is a heat source present, the 1D heat equation is modified to \(u_t(x, t) - c^2 u_{xx}(x, t) = q(x, t)\).
 
 \end{multicols*}
 
