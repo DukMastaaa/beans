@@ -744,7 +744,7 @@
         B_n &= \frac{2}{a \sinh(\frac{n \pi b}{a})} \int_{0}^{a} f(x) \sin \left(\frac{n \pi x}{a}\right) \,\deriv x.
     \end{align*}
     This is found using the following formula for arbitrary \(h(x)\) and \(k, c_1, c_2 \in \mathbb{R}\),
-    where the imaginary exponentials are written in terms of \(\sinh\) and \(\cosh\):
+    where the exponentials are written in terms of \(\sinh\) and \(\cosh\):
     \[
         h''(x) = k^2 h(x) \implies h(x) = c_1 \cosh(kx) + c_2 \sinh(kx).
     \]
@@ -782,7 +782,116 @@
     
     \section{Fourier Method}
 
-    when the uhhh
+    The \emph{Fourier method} aims to find a solution to a PDE using separation of variables and writing the
+    solution in terms of a Fourier series. This section provides an example of Fourier's method used to
+    solve the 1D wave equation on a finite string. Other PDEs on finite domains can also be solved via
+    a similar process.
+
+    Consider \(u_{tt} = c^2 u_{xx}\) on \(x \in [0, L]\), \(t \geq 0\), with BCs
+    \(u(0, t) = u(L, t) = 0\) and ICs \(u(x, 0) = f(x)\), \(u_t(x, 0) = g(x)\).
+    Assume the solution is in \emph{separable form} \(u(x, t) = F(x) G(t)\) for arbitrary \(F, G\) twice differentiable.
+    Define the \emph{trivial solution} to be \(u(x, t) = 0\). Non-trivial solutions are desired.
+
+    Substituting in ICs gives the following equations, where values giving non-trivial solutions are avoided.
+    \begin{align*}
+        u(0, t) = F(0) G(t) = 0 & \implies F(0) = 0 \\
+        u(L, t) = F(L) G(t) = 0 & \implies F(L) = 0.
+    \end{align*}
+    Note that choosing \(G(t) = 0\) makes \(u(x, t) = 0\) so that branch is ignored.
+    Next, due to the separable form, \(u_{tt} = F(x) G''(t)\) and \(u_{xx} = F''(x) G(t)\), so
+    \begin{align*}
+        u_{tt} &= c^2 u_{xx} \\
+        F(x) G''(t) &= c^2 F''(x) G(t) \\
+        \frac{G''(t)}{c^2 G(t)} &= \frac{F''(x)}{F(x)}.
+    \end{align*}
+    Both sides of this equation only depend on one variable. Since \(x\) and \(t\) are independent,
+    for the equation to hold, both sides must be equal to a constant \(k \in \mathbb{R}\) known as
+    the \emph{separation constant}. Thus,
+    \[
+        \frac{G''(t)}{c^2 G(t)} = \frac{F''(x)}{F(x)} = k
+        \implies
+        G''(t) = kc^2 G(t),
+        \quad
+        F''(x) = k F(x).
+    \]
+    So, the PDE has been transformed into 2 ODEs in F and G. This can be solved considering 3 cases for \(k\).
+    
+    \begin{enumerate}
+        \item \(k = 0\).
+            
+            Then, \(F''(x) = 0\) so \(F(x) = ax + b\) for \(a, b \in \mathbb{R}\).
+            Substituting ICs gives
+            \(F(0) = b = 0\) and \(F(L) = aL = 0\) so \(a, b = 0\) and \(F(x) = 0\).
+            Since \(u(x, t) = 0\), this results in the trivial solution.
+
+        \item \(k = p^2\) for \(p > 0\).
+        
+            Then, \(F''(x) = p^2 F(x)\) so \(F(x) = a e^{px} + b e^{-px}\) for \(a, b \in \mathbb{R}\).
+            Substituting ICs gives
+            \(F(0) = a + b = 0 \implies b = -a\). Also,
+            \[
+                F(L) = a e^{pL} + b e^{-pL} = a \left(e^{pL} - e^{-pL}\right) = 0.
+            \]
+            Since \(e^{pL} \neq 0\) and \(e^{pL} = e^{-pL}\) only when \(pL = 0\), but both \(p\) and \(L\)
+            are defined to be non-zero, then \(a = 0\), \(b = 0\) and \(F(x) = 0\) giving the trivial solution.
+
+            Note that instead of using a linear combination of exponentials for \(F\), one could also use
+            \(F(x) = a \cosh(px) + b \sinh(px)\) to get the same result.
+
+        \item \(k = -p^2\) for \(p > 0\).
+        
+            Then, \(F''(x) = -p^2 F(x)\) so \(F(x) = a \cos(px) + b \sin(px)\).
+            Substituting ICs gives
+            \(F(0) = a = 0\) so \(F(x) = b \sin(px)\). Additionally,
+            \(F(L) = b \sin(pL) = 0\).
+
+            Either \(b = 0\), giving the trivial solution, or \(\sin(pL) = 0\) so \(pL = n \pi\) for
+            \(n \in \mathbb{N}\). Choosing the non-trivial branch,
+            \(k = -p^2 = -(n \pi / L)^2\), so
+            \[
+                F(x) = b \sin \left(\frac{n \pi x}{L}\right).
+            \]
+
+            For this \(k\), we then have
+            \(G''(t) = -(n \pi / L)^2 c^2 G(t) = -(n \pi c / L)^2 G(t)\).
+            This gives
+            \[
+                G(t) = A \cos\left(\frac{n \pi ct}{L}\right) + B \sin \left(\frac{n \pi ct}{L}\right).
+            \]
+    \end{enumerate}
+
+    Thus, the only non-trivial solution found is given by
+    \[
+        u(x, t)
+        = F(x) G(t)
+        = b \sin \left(\frac{n \pi x}{L}\right)
+        \left[
+            A \cos\left(\frac{n \pi ct}{L}\right) + B \sin \left(\frac{n \pi ct}{L}\right)
+        \right].
+    \]
+    Since the wave equation is linear, any linear combination of the above \(u\) will also
+    be a solution. Indexing over \(n\), the above \(u\) can be summed up over all \(n\) with
+    different coefficients \(A_n\) and \(B_n\) to give the following solution:
+    \[
+        u(x, t)
+        = \sum_{n=0}^{\infty} \left[
+            A_n \cos\left(\frac{n \pi ct}{L}\right) + B_n \sin \left(\frac{n \pi ct}{L}\right)
+        \right]
+        \sin \left(\frac{n \pi x}{L}\right).
+    \]
+
+    To find formulas for the coefficients \(A_n\) and \(B_n\), apply ICs:
+    \begin{align*}
+        u(x, 0) = f(x) &= \sum_{n=0}^{\infty} (A_n + 0) \sin\left(\frac{n \pi x}{L}\right) \\
+        A_n &= \frac{2}{L} \int_0^L f(x) \sin\left(\frac{n \pi x}{L}\right) \,\deriv x,
+    \end{align*}
+    since the sum is the same as the half-range \(\sin\) series for \(f\). Similarly,
+    \begin{align*}
+        u_t(x, 0) = g(x) &= \sum_{n=0}^{\infty} (0 + \frac{n \pi c}{L} B_n) \sin \left(\frac{n \pi x}{L}\right) \\
+        B_n &= \frac{2}{L} \cdot \frac{L}{n \pi c} \int_{0}^L g(x) \sin \left(\frac{n \pi x}{L}\right) \,\deriv x \\
+        &= \frac{2}{n \pi c} \int_{0}^L g(x) \sin \left(\frac{n \pi x}{L}\right) \,\deriv x,
+    \end{align*}
+    again using a half-range \(\sin\) series for \(g\).
 
 \end{multicols*}
 
