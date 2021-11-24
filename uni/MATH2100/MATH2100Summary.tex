@@ -104,24 +104,24 @@
     Let \(\dot{\vec{y}} = \vec{f}(\vec{y})\) with \(\vec{y} \in \mathbb{R}^2\),
     \(\vec{f}: \mathbb{R}^2 \to \mathbb{R}^2\), where \(\vec{f}\) does not depend on \(t\).
     \(\vec{f}\) defines a direction field in
-    the \(y_1\)-\(y_2\) plane, and a trajectory of the system is a curve following the
+    the \(y_1\)-\(y_2\) plane, and a \emph{trajectory} of the system is a curve following the
     field. \(\vec{f}\) being continuous with continuous partials implies existence and uniqueness
     for these trajectories, so they do not cross. By the chain rule, the slope of a trajectory is
     \[\oderiv{y_2}{y_1} = \frac{\dot y_2}{\dot y_1} = \frac{f_2}{f_1}.\]
-
-    A nullcline is a curve in phase space where the slope of the trajectory is either 0 or \(\infty\).
+    %
+    A \emph{nullcline} is a curve in phase space where the slope of the trajectory is either 0 or \(\infty\).
     Set \(\dot y_2 = 0\) for horizontal nullclines and \(\dot y_1 = 0\) for vertical nullclines, and
     solve for \(y_2\). Solving for the trajectories themselves is possible in specific cases,
     usually when the ODE in \(y_2\) from the slope formula is separable.
 
-    For the lines in phase space in the direction of the eigenvectors (called eigendirections),
+    For the lines in phase space in the direction of the eigenvectors (called \emph{eigendirections}),
     there are straight line solutions either flowing towards or away from the origin, determined
     by the sign of the corresponding eigenvalue (\(-\) stable, \(+\) unstable).
     
     \(\lambda_1 \neq \lambda_2\) and both have the same sign:
     \begin{itemize}
         \item Negative \(\lambda\) gives a \emph{stable improper node}, where
-            trajectories curve like a parabola and approach the gendirection with smallest absolute value,
+            trajectories curve like a parabola and approach the eigendirection with smallest absolute value,
             since that exponential term dominates at large \(t\).
         \item Positive \(\lambda\) gives an
             \emph{unstable improper node}, where trajectories approach eigendirection with
@@ -176,7 +176,7 @@
 \begin{multicols}{2}
     \section{Non-Linear or Inhomogeneous Systems}
 
-    A system \(\dot{\vec{y}} = \vec{f}(\vec{y})\) has a critical point at \(\vec{y^*}\) if
+    A system \(\dot{\vec{y}} = \vec{f}(\vec{y})\) has a \emph{critical point} at \(\vec{y^*}\) if
     \(\vec{f}(\vec{y^*}) = \vec{0}\). Linear systems always have one at \(\vec{0}\), and only one
     unless \(\det \mat{A} = 0\).
     %
@@ -186,9 +186,9 @@
     \(\dot{\vec{x}} = \mat{A} \vec{x}\), so techniques discussed earlier are applicable.
     
     For a nonlinear system \(\dot{\vec{y}} = \vec{f}(\vec{y})\), the nature of the system around the
-    critical point is approximated via the Jacobian matrix \(\mat{D}\vec{f}\). 
+    critical point is approximated via the \emph{Jacobian matrix} \(\mat{D}\vec{f}\). 
     The stability diagram can be used to classify these critical points by evaluating \(\mat{D}\vec{f}\)
-    at each \(\vec{y^*}\). The linearised system near \(\vec{y^*}\) is then
+    at each \(\vec{y^*}\). The \emph{linearised system} near \(\vec{y^*}\) is then
     \[
         \dot{\vec{y}} = \mat{D}\vec{f} |_{\vec{y^{*}}} (\vec{y} - \vec{y^*}),
         \quad
@@ -308,9 +308,9 @@
     \emph{linear differential operator} satisfying \(L(u+v) = L(u) + L(v)\) and
     \(L(cu) = c L(u)\) for \(c \in \mathbb{R}\) and functions \(u, v\). This can be used
     to verify a DE is linear using the linearity of the derivative. A common differential operator
-    is the del operator \(\grad\), defined in 3 dimensions by
+    is the \emph{del} operator \(\grad\), defined in 3 dimensions by
     \(\grad = (\pderiv{}{x}, \pderiv{}{y}, \pderiv{}{z})\). It can be applied to a scalar field
-    \(f\) to get \(f\)'s gradient field, or be dotted or crossed with a vector field \(\vec{v}\)
+    \(f\) to get \(f\)'s \emph{gradient field}, or be dotted or crossed with a vector field \(\vec{v}\)
     to get its \emph{divergence} or \emph{curl}:
     \begin{gather*}
         \operatorname{grad} f = \grad f = \left(\pderiv{f}{x}, \pderiv{f}{y}, \pderiv{f}{z}\right),
@@ -333,7 +333,7 @@
     \[
         \grad^2 \vec{v} = \grad(\grad \cdot \vec{v}) - \grad \times (\grad \times \vec{v}).
     \]
-    The above formulas only apply for \emph{cartesian coordinates}; other coordinate systems have
+    The above formulas only apply for cartesian coordinates; other coordinate systems have
     different expressions. Importantly, the Laplacian in polar coordinates is given by
     \[
         \grad^2 = \frac{1}{r} \pderiv{}{r} \left(r \pderiv{}{r}\right) + \frac{1}{r^2} \pderiv[2]{}{\theta}.
@@ -400,11 +400,11 @@
     If \(f\) has period \(2L\) and is piecewise continuous within that period, then its Fourier series converges
     to \(\frac{1}{2}(f(x^{+}) + f(x^{-}))\) at every \(x\) where \(f\) has left and right derivatives.
 
-    To derive formulas for the coefficients, define functions \(f_1\) and \(f_2\) to be orthogonal
+    To derive formulas for the coefficients, define functions \(f_1\) and \(f_2\) to be \emph{orthogonal}
     if \(\int_{-L}^{L} f_1(x) f_2(x) \,\deriv x = 0\). It can be shown that all functions
     \(\left\{1, \cos\left(\frac{n \pi x}{L}\right), \sin\left(\frac{n \pi x}{L}\right)\right\}\)
     are mutually orthogonal by integration by parts.
-    Both sides of the Fourier Series equation can then be integrated and solved for
+    Both sides of the Fourier series equation can then be integrated and solved for
     the coefficients, where orthogonal terms vanish. This orthogonality is further discussed in MATH2001.
 
 \end{multicols}
@@ -435,7 +435,7 @@
     \section{1D Wave, Infinite Domain}
 
     The general solution to the 1D wave equation \(u_{tt} = c^2 u_{xx}\) can be found with the change of
-    variables \(v = x + ct\) and \(w = x - ct\), giving \(u{tt} - c^2 u_{xx} = u_{vw} = 0\).
+    variables \(v = x + ct\) and \(w = x - ct\), giving \(u_{tt} - c^2 u_{xx} = u_{vw} = 0\).
     This results in \(u(x, t) = F(x + ct) + G(x - ct)\) for arbitrary twice-differentiable \(F, G\).
 
     From here, consider an infinite string with \(u(x, 0) = f(x)\) as initial deflection
@@ -610,6 +610,7 @@
     and the desired solution is a sinusoid with exponential decay,
     \[
         u(x, t)
+        = \Re(v(x, t))
         = u_0 e^{-\sqrt{\frac{\omega}{2c^2}} x}
         \cos \left(
             \omega t - \sqrt{\frac{\omega}{2c^2}} x
