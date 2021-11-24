@@ -5,6 +5,8 @@
 
 \input{mymathpreamble.tex}
 
+\usepackage{mathtools}
+
 % giving this a try:
 % http://www.khirevich.com/latex/microtype/
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
@@ -28,11 +30,19 @@
 \usepackage{tikz}
 \usepackage{tikzducks}
 
-\usepackage[style=numeric]{biblatex}
+\usepackage[style=ieee]{biblatex}
 \addbibresource{bibliography.bib}
 
 \usepackage{hyperref}
 \usepackage{cleveref}
+
+% https://tex.stackexchange.com/a/51349
+\hypersetup{
+  colorlinks = true,
+  urlcolor = blue,
+  linkcolor = blue,
+  citecolor = red
+}
 
 \setcounter{secnumdepth}{0}  % get rid of section numbering - no need to use \section*
 
@@ -458,7 +468,10 @@
         u(x, t) &= \sum_{n=1}^{\infty} \left(
             A_n \cos\left(\frac{n \pi c t}{L}\right) + B_n \sin\left(\frac{n \pi ct}{L}\right)
         \right) \sin \left(\frac{n \pi x}{L}\right) \\
-        A_n &= \frac{2}{L} \int_0^L \sin\left(\frac{n \pi x}{L}\right) f(x) \,\deriv x \\
+        A_n &= \frac{2}{L} \int_0^L \sin\left(\frac{n \pi x}{L}\right) f(x) \,\deriv x
+            \tag*{
+                \(\left(\frac{1}{2} \text{-range sin}\right)\)
+            } \\
         B_n &= \frac{2}{n \pi c} \int_0^L \sin\left(\frac{n \pi x}{L}\right) g(x) \deriv x.
     \end{align*}
     Note that \(A_n\) are just the coefficients of the half-range \(\sin\) series of \(f\).
@@ -469,14 +482,43 @@
     with ICs \(u(x, 0) = f(x)\) and BCs \(u_x(0, t) = u_x(L, t) = 0\), indicating that the endpoints
     are insulated. Again using Fourier's method, one possible solution is given by
     \(u(x, t) = A_0 \in \mathbb{R}\). A non-constant solution is given by
-    \begin{align*}
-        u(x, t) &= \sum_{n=0}^{\infty} A_n e^{-\left(\frac{n \pi c}{L}\right)^2 t} \cos\left(\frac{n \pi x}{L}\right) \\
-        A_0 &= \frac{1}{L} \int_0^L f(x) \,\deriv x \\
-        A_n &= \frac{2}{L} \int_0^L f(x) \cos\left(\frac{n \pi x}{L}\right) \,\deriv x.
-    \end{align*}
-    Note that \(A_n\) are just the coefficients of the half-range \(\cos\) series of \(f\).
-    There is an \(\exp\) term in the series instead of \(\sin\) and \(\cos\) due to
-    the first derivative \(u_t\) in the PDE.
+    the following formula. \(A_n\) are the half-range \(\cos\) coefficients of \(f\).
+    %
+    % this took a ***long*** time to do.
+    \begin{gather*}
+        u(x, t) = \sum_{n=0}^{\infty} A_n e^{-\left(\frac{n \pi c}{L}\right)^2 t} \cos\left(\frac{n \pi x}{L}\right) \\
+        \hphantom{u(x}\;\:\!
+        {
+            \everymath{\displaystyle}
+            \left.
+            \begin{aligned}
+                A_0 &= \frac{1}{L} \int_0^L f(x) \,\deriv x \\
+                A_n &= \frac{2}{L} \int_0^L f(x) \cos\left(\frac{n \pi x}{L}\right) \,\deriv x
+            \end{aligned}
+            \;
+            \right\}
+            \makebox[0pt][l]{
+                \qquad\quad\;\;
+                \(
+                    \left(
+                        \textstyle\frac{1}{2} \text{-range cos}
+                    \right)
+                \)
+            }
+        }
+    \end{gather*}
+    %
+    % There is an \(\exp\) term in the series instead of \(\sin\) and \(\cos\) due to
+    % the first derivative \(u_t\) in the PDE.
+
+    For the case that BCs are \(u(0, t) = u(L, t) = 0\) involving \(u\) instead of \(u_x\), a
+    half-range \(\sin\) series for coefficients \(B_n\) is used instead, and
+    \(
+        u(x, t) = \sum_{n=1}^{\infty} B_n
+        \exp \left(-\left(\frac{n \pi c}{L}\right)^2 t\right)
+        \sin\left(\frac{n \pi x}{L}\right)
+    \).
+    This was verified in an assignment question.
 
     \section{1D Heat, Infinite Domain}
 
@@ -485,20 +527,19 @@
     the Gaussian function \(G(x, t)\) is a special solution to the equation, and so is \(G(x - y, t)\)
     with \(y \in \mathbb{R}\) as a parameter. It represents an injection of 1 unit of heat energy
     at \(x = y, t = 0\). Due to the superposition principle, the following formula can be verified
-    as the solution to the IVP:
+    as the solution to the IVP by distributing partials into the integral and taking the limit as
+    \(t \to 0\) for the IC.
     \[
         u(x, t)
         = \int_{-\infty}^{\infty} G(x - y, t) f(y) \,\deriv y
         = \frac{1}{\sqrt{4 \pi c^2 t}} \int_{-\infty}^{\infty} \exp\left(-\frac{(x-y)^2}{4c^2 t}\right) f(y) \,\deriv y.
     \]
-    This is verified by distributing partial derivatives into the integral, and taing the limit as \(t \to 0\)
-    to show the initial condition holds.
 
     \section{1D Heat, Positive Domain}
 
     For \(u_t = c^2 u_{xx}\) on \(x, t \geq 0\), with IC \(u(x, 0) = F(x)\) for \(x \geq 0\) and BC
     \(u(0, t) = 0\), this is converted into a problem over all of \(\mathbb{R}\) considering
-    values \(x < 0\) to be \emph{unphysical} via symmetry. Define an odd extension of \(F\):
+    values \(x < 0\) to be \emph{unphysical}. Define an odd extension of \(F\):
     \[
         f(x) = \begin{cases}
             F(x), & x \geq 0 \\
@@ -546,17 +587,241 @@
 
     \section{1D Heat, Finite, Sinusoidal BC}
 
-    uhh
+    Consider \(u_t = c^2 u_{xx}\) on \(x, t \geq 0\) with BC \(u(0, t) = u_0 \cos(\omega t)\) and no ICs.
+    This can model temperature variation in soil due to periodic variation of surface temperature.
+    The equation can be solved by considering a complex function \(v(x, t) = X(x) e^{i \omega t}\) which solves the PDE,
+    and representing the BC as a complex exponential \(v(0, t) = u_0 e^{i \omega t}\).
+    The desired solution is then given by \(u(x, t) = \Re(v(x, t))\).
 
-    \section{1D Heat, Finite, Inhomogeneous, General Case}
+    Finding derivatives and substituting into the PDE gives \(i \omega X e^{i \omega t} = c^2 X'' e^{i \omega t}\)
+    so \(X'' = \frac{i \omega}{c^2} X = \alpha^2 X\) with
+    \(\alpha = \pm \sqrt{\frac{i \omega}{c^2}} = \pm \sqrt{\frac{\omega}{2c^2}} (1 + i)\).
+    This gives
+    \[
+        X(x) = A \exp\left(\sqrt{\frac{\omega}{2c^2}} (1 + i) x\right)
+        + B \exp\left(-\sqrt{\frac{\omega}{2c^2}} (1 + i) x\right)
+    \]
+    \(A = 0\) since the solution should be bounded as \(x \to \infty\). Applying the BC gives
+    \(v(0, t) = u_0 e^{i \omega t} = B e^{i \omega t}\) so \(B = u_0\).
+    Thus,
+    \[
+        v(x, t) = X(x) e^{i \omega t} = u_0 \exp\left(-\sqrt{\frac{\omega}{2c^2}} x\right),
+    \]
+    and the desired solution is a sinusoid with exponential decay,
+    \[
+        u(x, t)
+        = u_0 e^{-\sqrt{\frac{\omega}{2c^2}} x}
+        \cos \left(
+            \omega t - \sqrt{\frac{\omega}{2c^2}} x
+        \right).
+    \]
 
-    If there is a heat source present, the 1D heat equation is modified to \(u_t(x, t) - c^2 u_{xx}(x, t) = q(x, t)\).
+    \section{1D Heat, Finite, Inhomogeneous, General Case \texorpdfstring{\(q = q(x, t)\)}{q = q(x, t)}}
+
+    If there is a heat source present, the 1D heat equation is modified to \(u_t - c^2 u_{xx} = q(x, t)\).
+    Consider this PDE on \(x \in [0, L]\) for \(t \geq 0\) with IC \(u(x, 0) = f(x)\) and BCs \(u(0, t) = u(L, t) = 0\).
+    Assume a solution of the form
+    \[u(x, t) = \sum_{n=1}^{\infty} B_{n}(t) \sin\left(\frac{n \pi x}{L}\right).\]
+    The IC gives
+    \(u(0, t) = f(x) = \sum_{n=1}^{\infty} B_{n}(0) \sin\left(\frac{n \pi x}{L}\right)\)
+    so using a half-range \(\sin\) series,
+    \[B_{n}(0) = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n \pi x}{L}\right) \,\deriv x.\]
+    \(q\) can also be written as a half-range \(\sin\) series:
+    \[
+        q(x, t) = \sum_{n=1}^{\infty} Q_{n}(t) \sin \left(\frac{n \pi x}{L}\right),
+        \quad
+        Q_{n}(t) = \frac{2}{L} \int_{0}^{L} q(x, t) \sin \left(\frac{n \pi x}{L}\right) \,\deriv x.
+    \]
+    Substituting the half-range sums into the PDE and taking all terms to one side gives
+    \[
+        \sum_{n=1}^{\infty} \left[
+            B_{n}'(t) + \left(\frac{n \pi c}{L}\right)^{2} B_{n}(t) - Q_{n}(t)
+        \right] \sin \left(\frac{n \pi x}{L}\right) = 0.
+    \]
+    For every \(n\), since \(\sin \left(\frac{n \pi x}{L}\right)\) are orthogonal, then
+    \begin{align*}
+        B_{n}'(t) + \left(\frac{n \pi c}{L}\right)^{2} B_{n}(t) - Q_{n}(t) = 0  \tag{\(*\)}
+    \end{align*}
+    This is a 1\textsuperscript{st}-order linear ODE with constant coefficients for \(B_{n}(t)\).
+    
+    Here are the steps required to solve the PDE:
+    \begin{enumerate}
+        \item Calculate IC \(B_{n}(0)\) with half-range \(\sin\)
+        \item Calculate \(Q_n(t)\) with half-range \(\sin\)
+        \item Find the homogeneous solution of \((*)\), \(B_{n, H}\)
+        \item Guess a particular solution \(B_{n, P}\) to \((*)\) (undetermined coefficients)
+        \item \(B_{n}(t) = B_{n,H} + B_{n,P}\)
+        \item Substitute the calculated \(B_{n}(0)\) and find unknown coefficients
+        \item \(u(x, t) = \sum_{n=1}^{\infty} B_{n}(t) \sin \left(\frac{n \pi x}{L}\right)\).
+    \end{enumerate}
+
+\end{multicols*}
+
+\pagebreak
+
+\begin{multicols*}{2}
+
+    \section{1D Heat, Finite, Inhomogeneous, Special Case \texorpdfstring{\(q = q(x)\)}{q = q(x)}}
+
+    For the case that the inhomogeneous term \(q\) is only a function of \(x\), so \(u_{t} - c^{2} u_{xx} = q(x)\),
+    then a simpler process can be used to solve the PDE. BCs and ICs are same as in the general case.
+    Assume that a solution \(u_{s}(x)\) is only a function of \(x\),
+    called the ``steady-state'' solution. It can be thought of as \(u(x, t)\) as \(t \to \infty\). Substituting into the
+    PDE gives
+    \[
+        (u_{s})_t - c^{2} (u_{s})_{xx} = -c^{2} (u_{s})_{xx} = q(x).
+    \]
+    Integrate twice to get \(u_{s}\), and apply BCs to solve for constants of integration.
+
+    For the ``transient'' or non-steady-state part, \(\hat u = u - u_s\) can be shown to satisfy the
+    homogeneous heat equation and preserve the BCs \(\hat u(0, t) = \hat u(L, t) = 0\).
+    The new IC is \(\hat u(x, 0) = \hat f(x) = f(x) - u_s(x)\). The solution to this homogeneous equation,
+    as discussed earlier, is
+    \[
+        \hat u(x, t) 
+        = \sum_{n=1}^{\infty} B_n 
+            e^{-\left(\frac{n \pi c}{L}\right)^2 t}
+            \sin \left(\frac{n \pi x}{L}\right),
+        \quad
+        B_n = \frac{2}{L} \int_0^L \hat f(x) \sin \left(\frac{n \pi x}{L}\right) \,\deriv x.
+    \]
+    The total solution is then \(u(x, t) = u_s(x) + \hat u(x, t)\).
+
+    \section{1D Wave, Finite, Inhomogeneous}
+
+    Consider \(u_{tt} - c^2 u_{xx} = F(x, t)\) on \(x \in [0, L]\) and \(t \geq 0\), where \(F\) represents
+    the force per unit mass on the finite string. BCs are \(u(0, t) = u(L, t) = 0\) and ICs are
+    \(u(x, 0) = f(x)\), \(u_t(x, 0) = g(x)\).
+
+    If \(F\) is a function of \(x\) and \(t\), assume that the solution has the form
+    \(u(x, t) = \sum_{n=1}^{\infty} B_n(t) \sin\left(\frac{n \pi x}{L}\right)\) and convert \(F\) to a half-range
+    \(\sin\) series. Proceed as in the 1D heat inhomogeneous equation and obtain a second-order ODE in \(B_n(t)\):
+    \[
+        B_n''(t) + \left(\frac{n \pi c}{L}\right)^2 B_n(t) - K_n(t) = 0,
+    \]
+    where \(K_n(t)\), \(B_n(0)\) and \(B_n'(0)\) are the half-range \(\sin\) coefficients of
+    \(F(x, t)\), \(f(x)\) and \(g(x)\) respectively. (This formula was not fully derived in lectures.)
+    
+    If \(F\) is only a function of \(x\), the steady-state technique discussed in the 1D heat case can be used
+    to simplify the process, assuming a solution \(u_s(x)\) independent of \(t\) and then calculating the transient
+    part \(\hat u = u - u_s\). This can be shown to solve \(\hat u_{tt} - c^2 \hat u_{xx} = 0\) and preserve BCs.
+    New ICs are
+    \[
+        \hat u(x, 0) = \hat f(x) = f(x) - u_s(x),
+        \quad
+        \hat u_t(x, 0) = g(x).
+    \]
+    \(\hat u\) can be found via formulas given earlier, reproduced here for convenience:
+    \begin{gather*}
+        \hat u(x, t) = \sum_{n=1}^{\infty} \left(
+            A_n \cos\left(\frac{n \pi c t}{L}\right) + B_n \sin\left(\frac{n \pi ct}{L}\right)
+            \right) \sin \left(\frac{n \pi x}{L}\right) \\
+        A_n = \frac{2}{L} \int_0^L \sin\left(\frac{n \pi x}{L}\right) \hat f(x) \,\deriv x,
+        \qquad
+        B_n = \frac{2}{n \pi c} \int_0^L \sin\left(\frac{n \pi x}{L}\right) g(x) \deriv x.
+    \end{gather*}
+
+    \section{2D Laplace, Dirichlet BVP, Rectangular Region}
+
+    Consider the 2D Laplace equation \(\grad^2 u = u_{xx} + u_{yy} = 0\), which can be viewed as a steady-state
+    temperature distribution since \(u_{t} = 0\). For a rectangular region \(x \in [0, a], y \in [0, b]\),
+    define the following boundary conditions:
+    \[
+        \begin{cases}
+            u(0, y) = 0 \\
+            u(a, y) = 0 \\
+            u(x, 0) = 0 \\
+            u(x, b) = f(x).
+        \end{cases}
+    \]
+    In other words, \(u\) is 0 everywhere on the boundary except for the top side, where it has value \(f(x)\).
+    Specifying the values of \(u\) on a boundary is known as a Dirichlet boundary value problem (BVP).
+    No ICs are specified.
+    
+    The Fourier method is used to find solutions in separable form \(u(x, t) = F(x) G(y)\), giving
+    \begin{align*}
+        u(x, y) &= \sum_{n=1}^{\infty} B_{n} \sin \left(\frac{n \pi x}{a}\right) \sinh \left(\frac{n \pi y}{a}\right) \\
+        B_n &= \frac{2}{a \sinh(\frac{n \pi b}{a})} \int_{0}^{a} f(x) \sin \left(\frac{n \pi x}{a}\right) \,\deriv x.
+    \end{align*}
+    This is found using the following formula for arbitrary \(h(x)\) and \(k, c_1, c_2 \in \mathbb{R}\),
+    where the imaginary exponentials are written in terms of \(\sinh\) and \(\cosh\):
+    \[
+        h''(x) = k^2 h(x) \implies h(x) = c_1 \cosh(kx) + c_2 \sinh(kx).
+    \]
+    For a more general problem with functions specifying the entire boundary, \(\grad^2 u = 0\) is linear
+    so solutions considering one side at a time can be added together.
+    
+    \section{Harmonic Functions}
+
+    A function \(u(x, y)\) satisfying the Laplace equation \(\grad^2 u = 0\) throughout a region
+    \(D \subseteq \mathbb{R}^2\) is called \emph{harmonic} on \(D\). Harmonic functions come in
+    pairs, known as \emph{harmonic conjugates}, such that conjugates \(u(x, y), v(x, y)\) satisfy the
+    \emph{Cauchy-Riemann Equations}:
+    \[
+        u_x = v_y,
+        \quad
+        u_y = -v_x.
+        \tag{on \(D\)}
+    \]
+    This uniquely determines \(v\) from \(u\) up to a constant, and \(v\) can be found by partially integrating
+    with respect to \(x\) and \(y\).
+
+    For harmonic conjugates \(u\) and \(v\), \(\grad u = (u_x, u_y)\) and \(\grad v = (v_x, v_y) = (-u_y, u_x)\) so
+    \(\grad u \cdot \grad v = -u_x u_y + u_y u_x = 0\). Thus, \(\grad u \perp \grad v\), but since \(\grad u\) and
+    \(\grad v\) are perpendicular to \(u\) and \(v\)'s contour lines, \(u\) and \(v\)'s contours must then be
+    perpendicular. 
+
+    In the context of heat where \(u\) is temperature, contours of \(u\) are lines of constant temperature, and 
+    contours of \(v\) indicate the flow of heat. \(v\) is called the \emph{heat stream function}.
+
+\end{multicols*}
+
+\pagebreak
+
+\begin{multicols*}{2}
+    
+    \section{Fourier Method}
+
+    when the uhhh
 
 \end{multicols*}
 
 \end{landscape}
 
-\printbibliography
+% restore everything back to default
+\restoregeometry
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+% \fontsize{16}{12}\selectfont
+\begin{large}
+    
+    \section{About}
+    This is a summary document I made for the 2021 offering of MATH2100 Applied Mathematical Analysis
+    taught in The University of Queensland, which I made to contain the most essential information
+    covered in the course. Most worked examples covered in lectures have been excluded, and have been replaced
+    by either derivations or processes to solve various types of questions.
+    The last part of the course, applications of Laplace equation, covers point sources/sinks in 2D. That section
+    has been omitted from the summary as I felt it was not that important compared to the rest of the content,
+    and would not likely be assessed on exams.
+    
+    All of the material in this document is either from the course notes \cite{MATH2010Notes} and \cite{MATH2011Notes},
+    or from sources referenced below.
+
+    The source code for this document can be found here:
+    \url{https://github.com/DukMastaaa/beans/blob/main/uni/MATH2100/MATH2100Summary.tex}
+
+    This PDF can be downloaded from here:
+    \url{https://github.com/DukMastaaa/beans/blob/main/uni/MATH2100/output/MATH2100Summary.pdf}
+
+    \section{Useful Resources}
+
+    Phase plane plotter: \url{https://www.wolframalpha.com/widgets/view.jsp?id=9298fea31cf266903b3df7174b95ddd7}
+
+    Laplace transform worksheet: \url{https://sites.math.washington.edu/~aloveles/Math307Fall2019/m307LaplacePractice.pdf}
+
+    Inverse Laplace worksheet: \url{https://sites.math.washington.edu/~aloveles/Math307Spring2015/m307InverseLaplacePractice.pdf}
+
+    \printbibliography
+\end{large}
 
 \begin{figure}[b]
     \centering
