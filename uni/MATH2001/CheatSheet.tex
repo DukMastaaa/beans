@@ -3,9 +3,13 @@
 
 \usepackage{geometry}
 
+\usepackage[short,nodayofweek,level]{datetime}
+
 \input{mymathpreamble.tex}
 
 \usepackage{pdflscape}
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 
 \usepackage{multicol}
 \setlength{\columnsep}{0.8cm}
@@ -25,7 +29,7 @@
 
 % https://tex.stackexchange.com/a/390653
 \newlength{\interwordspace}
-\settowidth{\interwordspace}{\ }
+\settowidth{\interwordspace}{\enspace}
 
 \pagenumbering{gobble}
 
@@ -75,7 +79,7 @@
 
     \section{Projections and Orthonormal Bases}
 
-    \[P_{\beta' \to \beta''} P_{\beta \to \beta'} = P_{\beta \to \beta''}\]
+    \[\mat{P}_{\beta' \to \beta''} \mat{P}_{\beta \to \beta'} = \mat{P}_{\beta \to \beta''}\]
     %
     \begin{align*}
         \norm{\vec{v}} &= \sqrt{\inner{\vec{v}}{\vec{v}}} \\
@@ -94,28 +98,30 @@
     \proj_{U^{\perp}} (\vec{v}) &= \vec{v} - \proj_{U} (\vec{v})
     \end{align*}
     %
-    \[A\vec{x} = \vec{b} \longrightarrow A^{\tpose} A \vec{x} = A^{\tpose} \vec{b}
-    \longrightarrow \vec{x} = \left(A^{\tpose} A\right)^{-1} A^{\tpose} \vec{b}\]
+    \[\mat{A}\vec{x} = \vec{b} \longrightarrow \mat{A}^{\tpose} \mat{A} \vec{x} = \mat{A}^{\tpose} \vec{b}
+    \longrightarrow \vec{x} = (\mat{A}^{\tpose} \mat{A})^{-1} \mat{A}^{\tpose} \vec{b}\]
 
     \section{Matrix-Related Computation}
 
     \[
-        A\vec{x} = \lambda \vec{x} \quad \det (A - \lambda I) = 0 \quad (A - \lambda I) \vec{x} = \vec{0}
+        \mat{A}\vec{x} = \lambda \vec{x} \quad \det (\mat{A} - \lambda \mat{I})
+        = 0 \quad (\mat{A} - \lambda \mat{I}) \vec{x} = \vec{0}
     \]
     %
-    \(AP = PD\), where \(A = PDP^{-1}\) for diagonalisation and \(A = PDP^{\tpose}\) for orthogonal diagonalisation.
+    \(\mat{A}\mat{P} = \mat{P}\mat{D}\), where \(\mat{A} = \mat{P}\mat{D}\mat{P}^{-1}\) for diagonalisation and
+    \(\mat{A} = \mat{P}\mat{D}\mat{P}^{\tpose}\) for orthogonal diagonalisation.
     \[
-        P = \begin{bmatrix}
+        \mat{P} = \begin{bmatrix}
             \vec{v_1} & \vec{v_2} & \cdots \\ 
         \end{bmatrix}
         \quad
-        D = \begin{pmatrix}
+        \mat{D} = \begin{pmatrix}
             \lambda_1 & 0 & 0 \\ 
             0 & \ddots & 0 \\ 
             0 & 0 & \lambda_{n} \\ 
         \end{pmatrix}
     \]
-    \(P\)'s vectors need to be \emph{orthonormal} when orthogonally diagonalising.
+    \(\mat{P}\)'s vectors need to be \emph{orthonormal} when orthogonally diagonalising.
     %
     \begin{align*}
         ax^{2} + by^{2} + cxy &\longrightarrow \begin{pmatrix}
@@ -123,8 +129,8 @@
             c/2 & b \\ 
         \end{pmatrix} \\
         \begin{aligned}
-            ax^{2} &+ by^{2} + cz^{2} + dxy\\
-            &+ exz + fyz
+            ax^{2} + by^{2} + cz^{2} + dxy& \\
+            + exz + fyz &
         \end{aligned}
          &\longrightarrow \begin{pmatrix}
             a & d/2 & e/2 \\ 
@@ -133,14 +139,14 @@
         \end{pmatrix}
     \end{align*}
     %
-    \[\vec{x}^{\tpose} A \vec{x} + K \vec{x} + c = 0\]
+    \[\vec{x}^{\tpose} \mat{A} \vec{x} + \mat{K} \vec{x} + c = 0\]
     %
     When orthogonally diagonalising coefficient matrix of quadratic form, arrange column vectors of
-    \(P\) such that \(\det P = +1\).
+    \(\mat{P}\) such that \(\det \mat{P} = +1\).
 
     \section{Taylor Series and Critical Points}
 
-    \[H_{f} = \begin{pmatrix}
+    \[\mat{H}_f = \begin{pmatrix}
         f_{x_{1} x_{1}} & \cdots & f_{x_{1} x_{n}} \\ 
         \vdots & \ddots & \vdots \\ 
         f_{x_{n} x_{1}} & \cdots & f_{x_{n} x_{n}} \\ 
@@ -148,7 +154,7 @@
     %
     \begin{align*}
         f(\vec{x}) &\approx f(\vec{x_0}) + \left(\grad f (\vec{x_0})\right)^{\tpose} (\vec{x} - \vec{x_0}) \\
-        &\quad + \frac{1}{2} (\vec{x} - \vec{x_0})^{\tpose} H_{f}(\vec{x_0}) (\vec{x} - \vec{x_0}) + \cdots
+        &\quad + \frac{1}{2} (\vec{x} - \vec{x_0})^{\tpose} \mat{H}_f(\vec{x_0}) (\vec{x} - \vec{x_0}) + \cdots
     \end{align*}
     %
     \[
@@ -309,45 +315,45 @@
         \artanh(x) &= \frac{1}{2} \ln \left(\frac{1 + x}{1 - x}\right), x \in (-1, 1) \\
     \end{align*}
 
-    For some \(A \in M_{n \times n}(\mathbb{F})\), the following statements are equivalent:
+    For some \(\mat{A} \in M_{n \times n}(\mathbb{F})\), the following statements are equivalent:
     \begin{itemize}
-        \item \(A\) is non-singular (\(A^{-1}\) exists)
-        \item Only \(\vec{x} = \vec{0}\) satisfies \(A \vec{x} = \vec{0}\)
-        \item The row-echelon form of \(A\) does not have a row of zeroes
-        \item \(A \vec{x} = \vec{b}\) has a solution for all \(\vec{b} \in \mathbb{R}^n\)
-        \item \(\det A \neq 0\)
-        \item Columns of \(A\) are linearly independent
-        \item Rows of \(A\) are linearly independent
-        \item \(\dim(\nullspace(A)) = 0\)
-        \item \(\rank A = n\)
-        \item \(\lambda = 0\) is not an eigenvalue of \(A\)
+        \item \(\mat{A}\) is non-singular (\(\mat{A}^{-1}\) exists)
+        \item Only \(\vec{x} = \vec{0}\) satisfies \(\mat{A} \vec{x} = \vec{0}\)
+        \item The row-echelon form of \(\mat{A}\) does not have a row of zeroes
+        \item \(\mat{A} \vec{x} = \vec{b}\) has a solution for all \(\vec{b} \in \mathbb{R}^n\)
+        \item \(\det \mat{A} \neq 0\)
+        \item Columns of \(\mat{A}\) are linearly independent
+        \item Rows of \(\mat{A}\) are linearly independent
+        \item \(\dim(\nullspace(\mat{A})) = 0\)
+        \item \(\rank \mat{A} = n\)
+        \item \(\lambda = 0\) is not an eigenvalue of \(\mat{A}\)
     \end{itemize}
     %
     \vfill\columnbreak
     %
     The Gram-Schmidt process constructs an orthonormal basis \(\{\uvec{e}[1], \cdots, \uvec{e}[n]\}\) out of \(n\) linearly
     independent \(\{\vec{v_1}, \cdots, \vec{v_n}\}\). First let \(\uvec{e}[1] = \frac{\vec{v_1}}{\norm{\vec{v_1}}}\).
-    Then, for each \(i = 1, \cdots, n\):
+    Then, for each \(i = 1, \cdots{}, n\):
     \begin{enumerate}
         \item Let \(U_i = \spn \{\uvec{e}[1], \cdots, \uvec{e}[i]\}\).
         \item Calculate \(\vec{w_{i+1}} = \vec{v_{i+1}} - \proj_{U_{i}} \left(\vec{v_{i+1}}\right)\).
         \item Set \(\uvec{e}[i+1] = \frac{\vec{w_{i+1}}}{\norm{\vec{w_{i+1}}}}\) and increment \(i\) if required.
     \end{enumerate}
     %
-    \(A \in M_{n \times n}(\mathbb{F})\) is diagonalisable (\(A = PDP^{-1}\))
-    \begin{itemize}[leftmargin=1.0cm, labelsep=\interwordspace]
-        \item[iff] \(A\) has \(n\) linearly independent eigenvectors
+    \(\mat{A} \in M_{n \times n}(\mathbb{F})\) is diagonalisable (\(\mat{A} = \mat{P}\mat{D}\mat{P}^{-1}\))
+    \begin{itemize}[leftmargin=0.87cm, labelsep=\interwordspace]
+        \item[iff] \(\mat{A}\) has \(n\) linearly independent eigenvectors
         \item[iff] algebraic and geometric multiplicities are equal for every eigenvalue
     \end{itemize}
 
-    \(A \in M_{n \times n}(\mathbb{R})\) is orthogonally diagonalisable (\(A = PDP^{\tpose}\))
-    \begin{itemize}[leftmargin=1.0cm, labelsep=\interwordspace]
-        \item[iff] \(A\) is symmetric, i.e. \(A = A^{\tpose}\)
+    \(\mat{A} \in M_{n \times n}(\mathbb{R})\) is orthogonally diagonalisable (\(\mat{A} = \mat{P}\mat{D}\mat{P}^{\tpose}\))
+    \begin{itemize}[leftmargin=0.87cm, labelsep=\interwordspace]
+        \item[iff] \(\mat{A}\) is symmetric, i.e. \(\mat{A} = \mat{A}^{\tpose}\)
         \item[iff] eigenvectors corresponding to different eigenvalues are orthogonal with respect to the dot product 
     \end{itemize}
 
     The complex inner product for \(\vec{u}, \vec{v} \in \mathbb{C}^n\) is defined by
-    \[\inner{\vec{u}}{\vec{v}} = u_1 \bar v_1 + \cdots + u_n \bar v_n = \vec{v}^{*} \vec{u} \in \mathbb{C}\]
+    \[\inner{\vec{u}}{\vec{v}} = u_1 \overline{v_1} + \cdots + u_n \overline{v_n} = \vec{v}^{*} \vec{u} \in \mathbb{C}\]
     where \(\bar z\) is the conjugate of \(z\) and \(\vec{v}^{*}\) is the conjugate transpose of \(\vec{v}\). It satisfies
     \(\overline{\inner{\vec{u}}{\vec{v}}} = \inner{\vec{v}}{\vec{u}}\).
 
