@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+
+\input{mymathpreamble.tex}
+
+\usepackage{tcolorbox}
+
+\begin{document}
+Excluding the questions on past exams which ask to reproduce derivations, Question 5 from the 2019 Semester 2 exam was one of the most difficult (in my opinion). Here is a solution.
+
+\begin{tcolorbox}
+    Find a solution of the diffusion equation
+    \[
+        \pderiv{u}{t} = D \pderiv[2]{u}{x}
+    \]
+    on the infinite domain \(-\infty < x < +\infty\) of the following form
+    \[
+        u(x, t) = A(t) e^{-\left(\frac{x}{w(t)}\right)^{2}}
+    \]
+    by determining the unknown functions \(A(t)\) and \(w(t)\).
+\end{tcolorbox}
+
+We abbreviate \(A = A(t)\) and \(w = w(t)\). Let \(H = -x^{2}/w^{2}\), so \(u(x, t) = A e^{H}\). We have
+\begin{align*}
+    H_{x} &= \frac{-2x}{w^{2}} = \frac{2H}{x} \\
+    H_{xx} &= \frac{-2}{w^{2}} = \frac{2H}{x^{2}} \\
+    H_{t} &= -x^{2} \cdot -2 w^{-3} \cdot w' = \frac{2x^{2} w'}{w^{3}} = \frac{-2w'}{w} H.
+\end{align*}
+Since we want to solve \(u_{t} = D u_{xx}\), we find those derivatives:
+\begin{align*}
+    u_{t} &= \oderiv{}{t} \left(A e^{H}\right) \\
+    &= A' e^{H} + A H_{t} e^{H} \\
+    &= e^{H} (A' + A H_{t}) \\
+    &= e^{H} \left(A' + A \cdot \frac{-2w'}{w} H\right).
+\end{align*}
+Next,
+\begin{align*}
+    u_{xx} &= A \pderiv[2]{}{x} (e^{H}) \\
+    &= A \pderiv{}{x} \left(H_{x} e^{H}\right) \\
+    &= A \left(H_{xx} e^{H} + H_{x} H_{x} e^{H}\right) \\
+    &= A e^{H} \left(\frac{2H}{x^{2}} + \left(\frac{2H}{x}\right)^{2}\right) \\
+    &= A e^{H} \left(\frac{2H}{x^{2}} + \frac{4H^{2}}{x^{2}}\right) \\
+    &= A e^{H} \cdot \frac{2H + 4H^{2}}{x^{2}}.
+\end{align*}
+Now, we substitute into the PDE.
+\begin{align*}
+    u_{t} &= D u_{xx} \\
+    e^{H} \left(A' + A \cdot \frac{-2w'}{w} H\right) &= D A e^{H} \cdot \frac{2H + 4H^{2}}{x^{2}} \\
+    A' + A \cdot \frac{-2w' \cdot -x^{2}}{w^{3}} &= DA \cdot \frac{2H}{x^{2}} + DA \cdot \frac{4H^{2}}{x^{2}} \\
+    A' + \frac{2x^{2} w'}{w^{3}} A &= DA \cdot \frac{2\cdot -x^{2}}{w^{2} \cdot x^{2}} + DA \cdot 4 \cdot \frac{x^{4}}{w^{4}} \cdot \frac{1}{x^{2}} \\
+    A' + \frac{2x^{2} w'}{w^{3}}A &= \frac{-2}{w^{2}} DA + \frac{4x^{2}}{w^{4}} DA.
+\end{align*}
+From here, we express this as a polynomial in \(x\):
+\[
+    \underbrace{\left(A' + \frac{2}{w^{2}}DA\right)}_{(1)}
+    +
+    \underbrace{\left(\frac{-4}{w^{4}} DA + \frac{2w'}{w^{3}}A\right)}_{(2)} x^{2}
+    = 0,
+\]
+so \((1)\) and \((2)\) must vanish \emph{separately}.
+Starting with \((2)\),
+\begin{align*}
+    \frac{-4}{w^{4}}DA + \frac{2w'}{w^{3}}A &= 0 \\
+    \frac{A}{w^{4}} \left(-4D + 2w' w\right) &= 0.
+\end{align*}
+Seeking a non-trivial solution, assume \(A \neq 0\) and \(w^{4} \neq 0\). Then,
+\begin{align*}
+    -4D + 2 w' w &= 0 \\
+    4D &= 2 \oderiv{w}{t} w \\
+    2D &= \oderiv{w}{t} w \\
+    \int 2D \,dt &= \int w \,dw \\
+    2Dt + k_1 &= \frac{1}{2} w^{2} \\
+    w^{2} &= 4Dt + k_1 \\
+    w &= \pm \sqrt{4Dt + k_1}, \, k_1 \in \mathbb{R}.
+\end{align*}
+
+Then, from \((1)\),
+\begin{align*}
+    A' + \frac{2}{w^{2}}DA &= 0 \\
+    A' + \frac{2}{4Dt + k_1} DA &= 0 \\
+    \oderiv{A}{t} &= \frac{-2DA}{4Dt + k_1} \\
+    \int \frac{1}{A} \,dA &= \int \frac{-2}{4Dt + k_1} \,dt \\
+    \ln \abs{A} &= \frac{-2D}{4D} \ln \abs{4Dt + k_1} + c \\
+    \ln \abs{A} &= \frac{-1}{2} \ln \abs{4Dt + k_1} + c \\
+    A &= \left(4Dt + k_1\right)^{\frac{-1}{2}} k_2 \\
+    &= \frac{k_2}{\sqrt{4Dt + k_1}}.
+\end{align*}
+Thus, 
+\[
+    u(x, t) = A(t) e^{\frac{-x^{2}}{[w(t)]^{2}}} = \frac{k_2}{\sqrt{4Dt + k_1}} \exp\left(\frac{-x^{2}}{4Dt + k_1}\right),
+\]
+for \(k_1, k_2 \in \mathbb{R}\).
+
+\end{document}
